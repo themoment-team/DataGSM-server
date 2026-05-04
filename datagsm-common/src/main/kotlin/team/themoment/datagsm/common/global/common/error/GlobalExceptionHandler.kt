@@ -56,7 +56,7 @@ class GlobalExceptionHandler(
             val html = templateEngine.process("error", context)
             return ResponseEntity
                 .status(status)
-                .contentType(MediaType.TEXT_HTML)
+                .contentType(MediaType(MediaType.TEXT_HTML, StandardCharsets.UTF_8))
                 .body(html)
         }
 
