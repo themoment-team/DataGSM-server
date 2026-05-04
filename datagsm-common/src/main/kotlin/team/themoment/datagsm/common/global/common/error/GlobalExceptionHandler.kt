@@ -43,10 +43,10 @@ class GlobalExceptionHandler(
         request: HttpServletRequest,
     ): ResponseEntity<*> {
         logger().warn("Caught OAuth error with code {} and description {}", ex.error, ex.errorDescription)
-        logger().trace("OAuth Error Details: ", ex)
+        logger().trace("OAuth Error Details ", ex)
 
         val acceptHeader = request.getHeader(HttpHeaders.ACCEPT) ?: ""
-        if (acceptHeader.contains(MediaType.TEXT_HTML_VALUE)) {
+        if (acceptHeader.contains(MediaType.TEXT_HTML_VALUE) && !isOAuthTokenEndpoint()) {
             val status = ex.httpStatus
             val context = Context()
             context.setVariable("statusCode", status.value())
