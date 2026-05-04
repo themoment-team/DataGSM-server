@@ -1,8 +1,11 @@
 package team.themoment.datagsm.common.global.common.error
 
+import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.ConstraintViolationException
 import org.springframework.core.env.Environment
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.access.AccessDeniedException
@@ -15,6 +18,8 @@ import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
+import org.thymeleaf.TemplateEngine
+import org.thymeleaf.context.Context
 import team.themoment.datagsm.common.domain.oauth.dto.response.OAuthErrorResDto
 import team.themoment.datagsm.common.domain.oauth.exception.OAuthException
 import team.themoment.datagsm.common.global.common.discord.error.DiscordErrorNotificationService
@@ -29,20 +34,39 @@ import java.nio.charset.StandardCharsets
 class GlobalExceptionHandler(
     private val discordErrorNotificationService: DiscordErrorNotificationService? = null,
     private val environment: Environment,
+    private val errorMessageResolver: ErrorMessageResolver,
+    private val templateEngine: TemplateEngine,
 ) {
     @ExceptionHandler(OAuthException::class)
-    fun handleOAuthException(ex: OAuthException): ResponseEntity<OAuthErrorResDto> {
+    fun handleOAuthException(
+        ex: OAuthException,
+        request: HttpServletRequest,
+    ): ResponseEntity<*> {
         logger().warn("Caught OAuth error with code {} and description {}", ex.error, ex.errorDescription)
         logger().trace("OAuth Error Details: ", ex)
 
-        val errorResponse =
+        val acceptHeader = request.getHeader(HttpHeaders.ACCEPT) ?: ""
+        if (acceptHeader.contains(MediaType.TEXT_HTML_VALUE)) {
+            val status = ex.httpStatus
+            val context = Context()
+            context.setVariable("statusCode", status.value())
+            context.setVariable("error", status.reasonPhrase)
+            context.setVariable("message", errorMessageResolver.resolveMessage(status))
+            context.setVariable("path", request.requestURI)
+            val html = templateEngine.process("error", context)
+            return ResponseEntity
+                .status(status)
+                .contentType(MediaType.TEXT_HTML)
+                .body(html)
+        }
+
+        return ResponseEntity.status(ex.httpStatus).body(
             OAuthErrorResDto(
                 error = ex.error,
                 errorDescription = ex.errorDescription,
                 errorUri = null,
-            )
-
-        return ResponseEntity.status(ex.httpStatus).body(errorResponse)
+            ),
+        )
     }
 
     @ExceptionHandler(ExpectedException::class)
