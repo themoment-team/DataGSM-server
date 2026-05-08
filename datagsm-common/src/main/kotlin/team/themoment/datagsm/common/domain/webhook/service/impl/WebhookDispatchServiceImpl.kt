@@ -15,8 +15,9 @@ import java.util.UUID
 class WebhookDispatchServiceImpl(
     private val webhookJpaRepository: WebhookJpaRepository,
     private val webhookSender: WebhookSender,
-    private val objectMapper: ObjectMapper,
 ) : WebhookDispatchService {
+    private val objectMapper = ObjectMapper()
+
     @Async
     override fun dispatch(
         event: WebhookEvent,
