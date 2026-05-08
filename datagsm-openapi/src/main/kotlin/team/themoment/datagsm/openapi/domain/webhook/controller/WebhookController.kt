@@ -26,6 +26,7 @@ import team.themoment.datagsm.openapi.domain.webhook.service.DeleteWebhookServic
 import team.themoment.datagsm.openapi.domain.webhook.service.ModifyWebhookService
 import team.themoment.datagsm.openapi.domain.webhook.service.QueryWebhookService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.sdk.response.CommonApiResponse
 
 @Tag(name = "Webhook", description = "Webhook 관련 API")
 @RestController
@@ -93,5 +94,8 @@ class WebhookController(
     @DeleteMapping("/{webhookId}")
     fun deleteWebhook(
         @Parameter(description = "Webhook ID") @PathVariable webhookId: Long,
-    ) = deleteWebhookService.execute(webhookId)
+    ): CommonApiResponse<Nothing> {
+        deleteWebhookService.execute(webhookId)
+        return CommonApiResponse.success("Webhook을 성공적으로 삭제했습니다.")
+    }
 }
