@@ -12,7 +12,7 @@ import javax.crypto.spec.SecretKeySpec
 
 @Component
 class WebhookSender {
-    private val log = LoggerFactory.getLogger(WebhookSender::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     private val restClient: RestClient =
         RestClient
@@ -43,7 +43,7 @@ class WebhookSender {
         secret: String,
         payloadJson: String,
     ) {
-        log.warn("Failed to deliver webhook after 3 attempts url {} error {}", targetUrl, e.message)
+        logger.warn("Failed to deliver webhook after 3 attempts url {} error {}", targetUrl, e.message)
     }
 
     private fun computeHmacSha256(

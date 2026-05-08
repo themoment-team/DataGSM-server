@@ -21,7 +21,7 @@ class CreateWebhookServiceImpl(
     override fun execute(reqDto: CreateWebhookReqDto): CreateWebhookResDto {
         val account = currentUserProvider.getPrincipal().apiKey.account
 
-        if (webhookJpaRepository.findAllByAccount(account).size >= MAX_WEBHOOKS_PER_ACCOUNT) {
+        if (webhookJpaRepository.countByAccount(account) >= MAX_WEBHOOKS_PER_ACCOUNT) {
             throw ExpectedException("Webhook은 최대 10개까지 등록할 수 있습니다.", HttpStatus.BAD_REQUEST)
         }
 

@@ -15,4 +15,6 @@ interface WebhookJpaRepository : JpaRepository<WebhookJpaEntity, Long> {
     ): WebhookJpaEntity?
 
     fun findAllByIsActiveTrue(): List<WebhookJpaEntity>
+
+    fun countByAccount(account: AccountJpaEntity): Long
 }
