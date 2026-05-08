@@ -12,6 +12,9 @@ import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatu
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
 import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.dto.payload.ProjectCreatedData
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.project.service.CreateProjectService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -20,6 +23,7 @@ class CreateProjectServiceImpl(
     private val projectJpaRepository: ProjectJpaRepository,
     private val clubJpaRepository: ClubJpaRepository,
     private val studentJpaRepository: StudentJpaRepository,
+    private val webhookDispatchService: WebhookDispatchService,
 ) : CreateProjectService {
     @Transactional
     override fun execute(projectReqDto: ProjectReqDto): ProjectResDto {
@@ -75,6 +79,11 @@ class CreateProjectServiceImpl(
                 this.participants = participants
             }
         val savedProjectEntity = projectJpaRepository.save(projectEntity)
+
+        webhookDispatchService.dispatch(
+            WebhookEvent.PROJECT_CREATED,
+            ProjectCreatedData(projectId = savedProjectEntity.id!!, name = savedProjectEntity.name),
+        )
 
         return ProjectResDto(
             id = savedProjectEntity.id!!,

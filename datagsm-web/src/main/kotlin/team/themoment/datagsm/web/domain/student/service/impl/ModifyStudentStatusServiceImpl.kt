@@ -8,6 +8,9 @@ import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentStatusReqDto
 import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.dto.payload.StudentStatusChangedData
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.student.service.ModifyStudentStatusService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -15,6 +18,7 @@ import team.themoment.sdk.exception.ExpectedException
 class ModifyStudentStatusServiceImpl(
     private val studentJpaRepository: StudentJpaRepository,
     private val clubJpaRepository: ClubJpaRepository,
+    private val webhookDispatchService: WebhookDispatchService,
 ) : ModifyStudentStatusService {
     @Transactional
     override fun execute(
@@ -39,5 +43,15 @@ class ModifyStudentStatusServiceImpl(
                 student.role = reqDto.status
             }
         }
+
+        webhookDispatchService.dispatch(
+            WebhookEvent.STUDENT_STATUS_CHANGED,
+            StudentStatusChangedData(
+                studentId = student.id!!,
+                name = student.name,
+                email = student.email,
+                status = reqDto.status.name,
+            ),
+        )
     }
 }

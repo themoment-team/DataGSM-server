@@ -12,6 +12,9 @@ import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.dto.payload.ClubCreatedData
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.club.service.CreateClubService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -19,6 +22,7 @@ import team.themoment.sdk.exception.ExpectedException
 class CreateClubServiceImpl(
     private val clubJpaRepository: ClubJpaRepository,
     private val studentJpaRepository: StudentJpaRepository,
+    private val webhookDispatchService: WebhookDispatchService,
 ) : CreateClubService {
     @Transactional
     override fun execute(clubReqDto: ClubReqDto): ClubResDto {
@@ -80,6 +84,11 @@ class CreateClubServiceImpl(
         }
 
         studentJpaRepository.bulkAssignClub(participantIdsForBulkAssign, savedClub, clubReqDto.type)
+
+        webhookDispatchService.dispatch(
+            WebhookEvent.CLUB_CREATED,
+            ClubCreatedData(clubId = savedClub.id!!, name = savedClub.name, type = savedClub.type.name),
+        )
 
         return ClubResDto(
             id = savedClub.id!!,

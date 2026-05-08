@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.dto.payload.StudentWithdrawnData
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.student.service.WithdrawStudentService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -14,6 +17,7 @@ import team.themoment.sdk.exception.ExpectedException
 class WithdrawStudentServiceImpl(
     private val studentJpaRepository: StudentJpaRepository,
     private val clubJpaRepository: ClubJpaRepository,
+    private val webhookDispatchService: WebhookDispatchService,
 ) : WithdrawStudentService {
     @Transactional
     override fun execute(studentId: Long) {
@@ -32,5 +36,10 @@ class WithdrawStudentServiceImpl(
             majorClub = null
             autonomousClub = null
         }
+
+        webhookDispatchService.dispatch(
+            WebhookEvent.STUDENT_WITHDRAWN,
+            StudentWithdrawnData(studentId = student.id!!, name = student.name, email = student.email),
+        )
     }
 }

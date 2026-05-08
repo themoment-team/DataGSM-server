@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.dto.payload.StudentGraduatedData
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.student.service.GraduateStudentService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -14,6 +17,7 @@ import team.themoment.sdk.exception.ExpectedException
 class GraduateStudentServiceImpl(
     private val studentJpaRepository: StudentJpaRepository,
     private val clubJpaRepository: ClubJpaRepository,
+    private val webhookDispatchService: WebhookDispatchService,
 ) : GraduateStudentService {
     @Transactional
     override fun execute(studentId: Long) {
@@ -30,5 +34,10 @@ class GraduateStudentServiceImpl(
         student.dormitoryRoomNumber = null
         student.majorClub = null
         student.autonomousClub = null
+
+        webhookDispatchService.dispatch(
+            WebhookEvent.STUDENT_GRADUATED,
+            StudentGraduatedData(studentId = student.id!!, name = student.name, email = student.email),
+        )
     }
 }
