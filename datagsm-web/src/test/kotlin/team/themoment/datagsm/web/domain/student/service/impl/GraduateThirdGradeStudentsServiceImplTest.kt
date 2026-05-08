@@ -3,6 +3,7 @@ package team.themoment.datagsm.web.domain.student.service.impl
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import team.themoment.datagsm.common.domain.student.entity.DormitoryRoomNumber
@@ -12,11 +13,13 @@ import team.themoment.datagsm.common.domain.student.entity.constant.Major
 import team.themoment.datagsm.common.domain.student.entity.constant.Sex
 import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 
 class GraduateThirdGradeStudentsServiceImplTest :
     BehaviorSpec({
         val studentJpaRepository = mockk<StudentJpaRepository>()
-        val graduateThirdGradeStudentsService = GraduateThirdGradeStudentsServiceImpl(studentJpaRepository)
+        val webhookDispatchService = mockk<WebhookDispatchService>()
+        val graduateThirdGradeStudentsService = GraduateThirdGradeStudentsServiceImpl(studentJpaRepository, webhookDispatchService)
 
         Given("3학년 학생들이 존재하는 경우") {
             val student1 =
@@ -58,6 +61,7 @@ class GraduateThirdGradeStudentsServiceImplTest :
             val thirdGradeStudents = listOf(student1, student2, student3)
 
             every { studentJpaRepository.findStudentsByGrade(3) } returns thirdGradeStudents
+            justRun { webhookDispatchService.dispatch(any(), any()) }
 
             When("모든 3학년 학생을 졸업 처리하면") {
                 val result = graduateThirdGradeStudentsService.execute()

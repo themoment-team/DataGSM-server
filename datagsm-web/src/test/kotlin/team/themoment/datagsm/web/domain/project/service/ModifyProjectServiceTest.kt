@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
@@ -15,6 +16,7 @@ import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatu
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.constant.Sex
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.project.service.impl.ModifyProjectServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional
@@ -24,15 +26,18 @@ class ModifyProjectServiceTest :
 
         lateinit var mockProjectRepository: ProjectJpaRepository
         lateinit var mockClubRepository: ClubJpaRepository
-        lateinit var modifyProjectService: ModifyProjectService
-
         lateinit var mockStudentRepository: team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+        lateinit var webhookDispatchService: WebhookDispatchService
+        lateinit var modifyProjectService: ModifyProjectService
 
         beforeEach {
             mockProjectRepository = mockk<ProjectJpaRepository>()
             mockClubRepository = mockk<ClubJpaRepository>()
             mockStudentRepository = mockk<team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository>()
-            modifyProjectService = ModifyProjectServiceImpl(mockProjectRepository, mockClubRepository, mockStudentRepository)
+            webhookDispatchService = mockk<WebhookDispatchService>()
+            justRun { webhookDispatchService.dispatch(any(), any()) }
+            modifyProjectService =
+                ModifyProjectServiceImpl(mockProjectRepository, mockClubRepository, mockStudentRepository, webhookDispatchService)
         }
 
         describe("ModifyProjectService 클래스의") {

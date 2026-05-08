@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.just
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.runs
 import io.mockk.verify
@@ -12,6 +13,7 @@ import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
 import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.club.service.impl.DeleteClubServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional
@@ -21,12 +23,15 @@ class DeleteClubServiceTest :
 
         lateinit var mockClubRepository: ClubJpaRepository
         lateinit var mockStudentRepository: StudentJpaRepository
+        lateinit var webhookDispatchService: WebhookDispatchService
         lateinit var deleteClubService: DeleteClubService
 
         beforeEach {
             mockClubRepository = mockk<ClubJpaRepository>()
             mockStudentRepository = mockk<StudentJpaRepository>()
-            deleteClubService = DeleteClubServiceImpl(mockClubRepository, mockStudentRepository)
+            webhookDispatchService = mockk<WebhookDispatchService>()
+            justRun { webhookDispatchService.dispatch(any(), any()) }
+            deleteClubService = DeleteClubServiceImpl(mockClubRepository, mockStudentRepository, webhookDispatchService)
         }
 
         describe("DeleteClubService 클래스의") {

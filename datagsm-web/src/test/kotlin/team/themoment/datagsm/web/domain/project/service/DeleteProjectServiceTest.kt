@@ -5,12 +5,14 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
 import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.project.entity.ProjectJpaEntity
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
+import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
 import team.themoment.datagsm.web.domain.project.service.impl.DeleteProjectServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional
@@ -19,8 +21,13 @@ class DeleteProjectServiceTest :
     DescribeSpec({
 
         val mockProjectRepository = mockk<ProjectJpaRepository>()
+        val webhookDispatchService = mockk<WebhookDispatchService>()
 
-        val deleteProjectService = DeleteProjectServiceImpl(mockProjectRepository)
+        val deleteProjectService = DeleteProjectServiceImpl(mockProjectRepository, webhookDispatchService)
+
+        beforeEach {
+            justRun { webhookDispatchService.dispatch(any(), any()) }
+        }
 
         afterEach {
             clearAllMocks()
