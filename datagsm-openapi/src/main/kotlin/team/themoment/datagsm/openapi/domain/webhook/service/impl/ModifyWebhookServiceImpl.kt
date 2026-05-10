@@ -26,7 +26,10 @@ class ModifyWebhookServiceImpl(
                 ?: throw ExpectedException("Webhook을 찾을 수 없습니다.", HttpStatus.NOT_FOUND)
 
         reqDto.targetUrl?.let { webhook.targetUrl = it }
-        reqDto.events?.let { webhook.events = it }
+        reqDto.events?.let {
+            webhook.events.clear()
+            webhook.events.addAll(it)
+        }
 
         return WebhookResDto(
             id = webhook.id!!,

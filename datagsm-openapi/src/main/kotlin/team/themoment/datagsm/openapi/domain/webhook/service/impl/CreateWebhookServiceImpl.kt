@@ -29,7 +29,7 @@ class CreateWebhookServiceImpl(
         val webhook =
             WebhookJpaEntity().apply {
                 targetUrl = reqDto.targetUrl
-                events = reqDto.events
+                events = reqDto.events.toMutableSet()
                 this.account = account
                 this.secret = secret
             }

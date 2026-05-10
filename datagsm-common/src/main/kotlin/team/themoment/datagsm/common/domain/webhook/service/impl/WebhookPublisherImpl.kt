@@ -23,7 +23,7 @@ class WebhookPublisherImpl(
         event: WebhookEvent,
         data: Any,
     ) {
-        val targets = webhookJpaRepository.findAllByEventAndIsActive(event)
+        val targets = webhookJpaRepository.findAllByEventsContainsAndIsActiveTrue(event)
         if (targets.isEmpty()) return
 
         val payload =

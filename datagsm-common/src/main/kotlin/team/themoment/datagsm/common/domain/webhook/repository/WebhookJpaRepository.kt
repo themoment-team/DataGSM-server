@@ -4,12 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import team.themoment.datagsm.common.domain.account.entity.AccountJpaEntity
 import team.themoment.datagsm.common.domain.webhook.entity.WebhookJpaEntity
-import team.themoment.datagsm.common.domain.webhook.repository.custom.WebhookJpaCustomRepository
+import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
 
 @Repository
-interface WebhookJpaRepository :
-    JpaRepository<WebhookJpaEntity, Long>,
-    WebhookJpaCustomRepository {
+interface WebhookJpaRepository : JpaRepository<WebhookJpaEntity, Long> {
     fun findAllByAccount(account: AccountJpaEntity): List<WebhookJpaEntity>
 
     fun findByIdAndAccount(
@@ -18,4 +16,6 @@ interface WebhookJpaRepository :
     ): WebhookJpaEntity?
 
     fun countByAccount(account: AccountJpaEntity): Long
+
+    fun findAllByEventsContainsAndIsActiveTrue(event: WebhookEvent): List<WebhookJpaEntity>
 }

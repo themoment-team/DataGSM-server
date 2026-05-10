@@ -1,8 +1,11 @@
 package team.themoment.datagsm.common.domain.webhook.entity
 
+import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
-import jakarta.persistence.Convert
+import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -12,9 +15,10 @@ import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.DynamicUpdate
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import team.themoment.datagsm.common.domain.account.entity.AccountJpaEntity
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
-import team.themoment.datagsm.common.global.converter.WebhookEventSetConverter
 import java.time.LocalDateTime
 
 @Table(name = "tb_webhook")
@@ -32,9 +36,15 @@ class WebhookJpaEntity {
     @Column(name = "secret", nullable = false, length = 64)
     lateinit var secret: String
 
-    @Convert(converter = WebhookEventSetConverter::class)
-    @Column(name = "events", columnDefinition = "json", nullable = false)
-    var events: Set<WebhookEvent> = emptySet()
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+        name = "tb_webhook_event",
+        joinColumns = [JoinColumn(name = "webhook_id")],
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "event", nullable = false)
+    var events: MutableSet<WebhookEvent> = mutableSetOf()
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false, referencedColumnName = "id")
