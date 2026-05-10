@@ -1,19 +1,17 @@
 package team.themoment.datagsm.common.domain.webhook.service
 
-import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import team.themoment.sdk.logging.logger.logger
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 @Component
 class WebhookSender {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     private val restClient: RestClient =
         RestClient
             .builder()
@@ -43,7 +41,7 @@ class WebhookSender {
         secret: String,
         payloadJson: String,
     ) {
-        logger.warn("Failed to deliver webhook after 3 attempts url {} error {}", targetUrl, e.message)
+        logger().warn("Failed to deliver webhook after 3 attempts url {} error {}", targetUrl, e.message)
     }
 
     private fun computeHmacSha256(
