@@ -12,7 +12,7 @@ import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfo
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.common.domain.webhook.dto.payload.ProjectUpdatedData
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
-import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.datagsm.web.domain.project.service.ModifyProjectService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -21,7 +21,7 @@ class ModifyProjectServiceImpl(
     private val projectJpaRepository: ProjectJpaRepository,
     private val clubJpaRepository: ClubJpaRepository,
     private val studentJpaRepository: StudentJpaRepository,
-    private val webhookDispatchService: WebhookDispatchService,
+    private val webhookPublisher: WebhookPublisher,
 ) : ModifyProjectService {
     @Transactional
     override fun execute(
@@ -70,7 +70,7 @@ class ModifyProjectServiceImpl(
         project.club = ownerClub
         project.participants = newParticipants
 
-        webhookDispatchService.dispatch(
+        webhookPublisher.dispatch(
             WebhookEvent.PROJECT_UPDATED,
             ProjectUpdatedData(projectId = project.id!!, name = project.name),
         )

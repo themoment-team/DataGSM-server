@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service
 import team.themoment.datagsm.common.domain.webhook.dto.payload.WebhookPayload
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
 import team.themoment.datagsm.common.domain.webhook.repository.WebhookJpaRepository
-import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.datagsm.common.domain.webhook.service.WebhookSender
 import java.time.Instant
 import java.util.UUID
 
 @Service
-class WebhookDispatchServiceImpl(
+class WebhookPublisherImpl(
     private val webhookJpaRepository: WebhookJpaRepository,
     private val webhookSender: WebhookSender,
-) : WebhookDispatchService {
+) : WebhookPublisher {
     private val objectMapper = ObjectMapper()
 
     @Async

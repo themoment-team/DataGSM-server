@@ -19,7 +19,7 @@ import team.themoment.datagsm.common.domain.student.entity.StudentNumber
 import team.themoment.datagsm.common.domain.student.entity.constant.Major
 import team.themoment.datagsm.common.domain.student.entity.constant.Sex
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
-import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.datagsm.web.domain.club.service.impl.CreateClubServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional
@@ -29,15 +29,15 @@ class CreateClubServiceTest :
 
         lateinit var mockClubRepository: ClubJpaRepository
         lateinit var mockStudentRepository: StudentJpaRepository
-        lateinit var webhookDispatchService: WebhookDispatchService
+        lateinit var webhookPublisher: WebhookPublisher
         lateinit var createClubService: CreateClubService
 
         beforeEach {
             mockClubRepository = mockk<ClubJpaRepository>()
             mockStudentRepository = mockk<StudentJpaRepository>()
-            webhookDispatchService = mockk<WebhookDispatchService>()
-            justRun { webhookDispatchService.dispatch(any(), any()) }
-            createClubService = CreateClubServiceImpl(mockClubRepository, mockStudentRepository, webhookDispatchService)
+            webhookPublisher = mockk<WebhookPublisher>()
+            justRun { webhookPublisher.dispatch(any(), any()) }
+            createClubService = CreateClubServiceImpl(mockClubRepository, mockStudentRepository, webhookPublisher)
         }
 
         describe("CreateClubService 클래스의") {

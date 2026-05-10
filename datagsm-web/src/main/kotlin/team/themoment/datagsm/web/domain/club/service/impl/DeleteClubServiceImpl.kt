@@ -7,7 +7,7 @@ import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.common.domain.webhook.dto.payload.ClubDeletedData
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
-import team.themoment.datagsm.common.domain.webhook.service.WebhookDispatchService
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.datagsm.web.domain.club.service.DeleteClubService
 import team.themoment.sdk.exception.ExpectedException
 
@@ -15,7 +15,7 @@ import team.themoment.sdk.exception.ExpectedException
 class DeleteClubServiceImpl(
     private val clubJpaRepository: ClubJpaRepository,
     private val studentJpaRepository: StudentJpaRepository,
-    private val webhookDispatchService: WebhookDispatchService,
+    private val webhookPublisher: WebhookPublisher,
 ) : DeleteClubService {
     @Transactional
     override fun execute(clubId: Long) {
@@ -26,7 +26,7 @@ class DeleteClubServiceImpl(
         studentJpaRepository.bulkClearClubReferences(listOf(club))
         clubJpaRepository.deleteAllByIdInBatch(listOf(clubId))
 
-        webhookDispatchService.dispatch(
+        webhookPublisher.dispatch(
             WebhookEvent.CLUB_DELETED,
             ClubDeletedData(clubId = club.id!!, name = club.name),
         )
