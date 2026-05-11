@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import org.springframework.data.repository.findByIdOrNull
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
@@ -12,13 +13,15 @@ import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentSta
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.sdk.exception.ExpectedException
 
 class ModifyStudentStatusServiceImplTest :
     BehaviorSpec({
         val studentJpaRepository = mockk<StudentJpaRepository>()
         val clubJpaRepository = mockk<ClubJpaRepository>()
-        val service = ModifyStudentStatusServiceImpl(studentJpaRepository, clubJpaRepository)
+        val webhookPublisher = mockk<WebhookPublisher>()
+        val service = ModifyStudentStatusServiceImpl(studentJpaRepository, clubJpaRepository, webhookPublisher)
 
         Given("존재하지 않는 학생 ID로") {
             val studentId = 999L
@@ -51,6 +54,7 @@ class ModifyStudentStatusServiceImplTest :
 
             every { studentJpaRepository.findByIdOrNull(studentId) } returns student
             every { clubJpaRepository.findAllByLeader(student) } returns emptyList()
+            justRun { webhookPublisher.dispatch(any(), any()) }
 
             When("상태 변경을 요청하면") {
                 service.execute(studentId, reqDto)
@@ -79,6 +83,7 @@ class ModifyStudentStatusServiceImplTest :
 
             every { studentJpaRepository.findByIdOrNull(studentId) } returns student
             every { clubJpaRepository.findAllByLeader(student) } returns emptyList()
+            justRun { webhookPublisher.dispatch(any(), any()) }
 
             When("상태 변경을 요청하면") {
                 service.execute(studentId, reqDto)
@@ -104,6 +109,7 @@ class ModifyStudentStatusServiceImplTest :
             val reqDto = UpdateStudentStatusReqDto(status = StudentRole.GENERAL_STUDENT)
 
             every { studentJpaRepository.findByIdOrNull(studentId) } returns student
+            justRun { webhookPublisher.dispatch(any(), any()) }
 
             When("상태 변경을 요청하면") {
                 service.execute(studentId, reqDto)
@@ -126,6 +132,7 @@ class ModifyStudentStatusServiceImplTest :
             val reqDto = UpdateStudentStatusReqDto(status = StudentRole.STUDENT_COUNCIL)
 
             every { studentJpaRepository.findByIdOrNull(studentId) } returns student
+            justRun { webhookPublisher.dispatch(any(), any()) }
 
             When("상태 변경을 요청하면") {
                 service.execute(studentId, reqDto)
@@ -148,6 +155,7 @@ class ModifyStudentStatusServiceImplTest :
             val reqDto = UpdateStudentStatusReqDto(status = StudentRole.DORMITORY_MANAGER)
 
             every { studentJpaRepository.findByIdOrNull(studentId) } returns student
+            justRun { webhookPublisher.dispatch(any(), any()) }
 
             When("상태 변경을 요청하면") {
                 service.execute(studentId, reqDto)
