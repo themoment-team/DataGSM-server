@@ -11,9 +11,9 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.hibernate.annotations.DynamicUpdate
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubStatus
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
+import team.themoment.datagsm.shared.domain.club.constant.ClubStatus
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
 
 @Table(name = "tb_club")
 @Entity

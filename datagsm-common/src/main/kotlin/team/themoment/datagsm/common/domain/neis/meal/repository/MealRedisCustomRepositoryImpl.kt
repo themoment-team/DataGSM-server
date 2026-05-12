@@ -3,7 +3,7 @@ package team.themoment.datagsm.common.domain.neis.meal.repository
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
 import team.themoment.datagsm.common.domain.neis.meal.entity.MealRedisEntity
-import team.themoment.datagsm.common.domain.neis.meal.entity.constant.MealType
+import team.themoment.datagsm.shared.domain.neis.meal.constant.MealType
 import tools.jackson.core.type.TypeReference
 import tools.jackson.databind.json.JsonMapper
 import tools.jackson.module.kotlin.kotlinModule

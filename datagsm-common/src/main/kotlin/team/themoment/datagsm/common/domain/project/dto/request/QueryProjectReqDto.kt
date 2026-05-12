@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Positive
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectSortBy
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatus
 import team.themoment.datagsm.common.global.constant.SortDirection
+import team.themoment.datagsm.shared.domain.project.constant.ProjectSortBy
+import team.themoment.datagsm.shared.domain.project.constant.ProjectStatus
 
 data class QueryProjectReqDto(
     @field:Positive

@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubStatus
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
+import team.themoment.datagsm.shared.domain.club.constant.ClubStatus
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
 
 data class ClubReqDto(
     @field:NotBlank

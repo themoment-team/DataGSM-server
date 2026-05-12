@@ -1,9 +1,9 @@
 package team.themoment.datagsm.common.domain.student.dto.internal
 
 import io.swagger.v3.oas.annotations.media.Schema
-import team.themoment.datagsm.common.domain.student.entity.constant.Major
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
+import team.themoment.datagsm.shared.domain.student.constant.Major
+import team.themoment.datagsm.shared.domain.student.constant.Sex
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 
 // specialty(전공) 필드는 엑셀 양식에 미포함 — API(PATCH /v1/students/me/specialty)를 통해서만 수정 가능
 data class ExcelColumnDto(

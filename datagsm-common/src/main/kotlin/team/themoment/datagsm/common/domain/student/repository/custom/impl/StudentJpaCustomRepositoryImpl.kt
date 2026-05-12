@@ -12,16 +12,16 @@ import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
 import team.themoment.datagsm.common.domain.account.entity.QAccountJpaEntity.Companion.accountJpaEntity
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.student.dto.internal.StudentBulkUpdateDto
 import team.themoment.datagsm.common.domain.student.entity.QStudentJpaEntity.Companion.studentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
-import team.themoment.datagsm.common.domain.student.entity.constant.Major
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentSortBy
 import team.themoment.datagsm.common.domain.student.repository.custom.StudentJpaCustomRepository
 import team.themoment.datagsm.common.global.constant.SortDirection
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
+import team.themoment.datagsm.shared.domain.student.constant.Major
+import team.themoment.datagsm.shared.domain.student.constant.Sex
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
+import team.themoment.datagsm.shared.domain.student.constant.StudentSortBy
 
 @Repository
 class StudentJpaCustomRepositoryImpl(

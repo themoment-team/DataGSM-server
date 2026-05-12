@@ -1,8 +1,8 @@
 package team.themoment.datagsm.common.domain.club.dto.internal
 
 import io.swagger.v3.oas.annotations.media.Schema
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubStatus
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
+import team.themoment.datagsm.shared.domain.club.constant.ClubStatus
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
 
 data class ClubInfoDto(
     @field:Schema(description = "동아리명", example = "더모먼트", maxLength = 50)

@@ -3,7 +3,7 @@ package team.themoment.datagsm.common.domain.neis.meal.entity
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.redis.core.index.Indexed
-import team.themoment.datagsm.common.domain.neis.meal.entity.constant.MealType
+import team.themoment.datagsm.shared.domain.neis.meal.constant.MealType
 import java.time.LocalDate
 
 @RedisHash(value = "meal", timeToLive = 2592000)

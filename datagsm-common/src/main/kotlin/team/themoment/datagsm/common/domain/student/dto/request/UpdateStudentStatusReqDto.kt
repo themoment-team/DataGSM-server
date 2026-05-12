@@ -1,7 +1,7 @@
 package team.themoment.datagsm.common.domain.student.dto.request
 
 import jakarta.validation.constraints.NotNull
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 
 data class UpdateStudentStatusReqDto(
     @field:NotNull(message = "상태는 필수입니다.")

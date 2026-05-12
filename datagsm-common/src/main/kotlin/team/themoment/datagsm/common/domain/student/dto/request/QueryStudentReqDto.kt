@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Positive
-import team.themoment.datagsm.common.domain.student.entity.constant.Major
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentSortBy
 import team.themoment.datagsm.common.global.constant.SortDirection
+import team.themoment.datagsm.shared.domain.student.constant.Major
+import team.themoment.datagsm.shared.domain.student.constant.Sex
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
+import team.themoment.datagsm.shared.domain.student.constant.StudentSortBy
 
 data class QueryStudentReqDto(
     @field:Positive

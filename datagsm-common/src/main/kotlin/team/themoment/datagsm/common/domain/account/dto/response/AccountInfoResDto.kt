@@ -2,7 +2,7 @@ package team.themoment.datagsm.common.domain.account.dto.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import team.themoment.datagsm.common.domain.account.entity.constant.AccountRole
-import team.themoment.datagsm.common.domain.student.dto.response.StudentResDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentResDto
 
 data class AccountInfoResDto(
     @field:Schema(description = "계정 ID", example = "1")
