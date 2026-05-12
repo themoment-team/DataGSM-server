@@ -8,6 +8,7 @@ on:
       - 'datagsm-common/src/main/kotlin/**/constant/**'
       - 'datagsm-ksp-processor/**'
       - 'datagsm-shared/**'
+  workflow_dispatch:
 
 jobs:
   generate-version:
