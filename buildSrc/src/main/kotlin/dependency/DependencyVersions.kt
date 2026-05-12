@@ -19,4 +19,8 @@ object DependencyVersions {
     const val BUCKET4J_VERSION = "8.17.0"
 
     const val POI_VERSION = "5.5.1"
+
+    const val KOTLINX_SERIALIZATION_VERSION = "1.8.1"
+    const val KOTLINX_DATETIME_VERSION = "0.6.2"
+    const val SPRINGDOC_VERSION = "2.8.9"
 }

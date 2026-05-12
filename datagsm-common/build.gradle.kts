@@ -11,6 +11,10 @@ dependencyManagement {
 }
 
 dependencies {
+    // Shared KMP module
+    api(project(":datagsm-shared"))
+    api(dependency.Dependencies.KOTLINX_SERIALIZATION_JSON)
+
     // Jakarta EE
     api(dependency.Dependencies.JAKARTA_PERSISTENCE_API)
     api(dependency.Dependencies.JAKARTA_TRANSACTION_API)

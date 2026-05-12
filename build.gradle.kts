@@ -7,6 +7,8 @@ plugins {
     id(plugin.Plugins.KOTLIN_JVM) version plugin.PluginVersions.KOTLIN_VERSION apply false
     id(plugin.Plugins.KOTLIN_SPRING) version plugin.PluginVersions.KOTLIN_VERSION apply false
     id(plugin.Plugins.KOTLIN_JPA) version plugin.PluginVersions.KOTLIN_VERSION apply false
+    id("org.jetbrains.kotlin.multiplatform") version plugin.PluginVersions.KOTLIN_VERSION apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version plugin.PluginVersions.KOTLIN_VERSION apply false
     id(plugin.Plugins.SPRING_BOOT) version plugin.PluginVersions.SPRING_BOOT_VERSION apply false
     id(plugin.Plugins.SPRING_DEPENDENCY_MANAGEMENT) version plugin.PluginVersions.SPRING_DEPENDENCY_MANAGEMENT_VERSION apply false
     id(plugin.Plugins.KSP) version plugin.PluginVersions.KSP_VERSION apply false
@@ -20,6 +22,8 @@ version = "v20260426.0"
 apply<TestSummaryPlugin>()
 
 subprojects {
+    if (project.name == "datagsm-shared") return@subprojects
+
     apply(plugin = plugin.Plugins.KOTLIN_JVM)
     apply(plugin = plugin.Plugins.SPRING_DEPENDENCY_MANAGEMENT)
     apply(plugin = plugin.Plugins.KTLINT)

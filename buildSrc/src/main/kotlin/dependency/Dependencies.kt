@@ -5,11 +5,14 @@ import dependency.DependencyVersions.BUCKET4J_VERSION
 import dependency.DependencyVersions.JJWT_VERSION
 import dependency.DependencyVersions.KOTEST_VERSION
 import dependency.DependencyVersions.KOTLIN_COROUTINES_VERSION
+import dependency.DependencyVersions.KOTLINX_DATETIME_VERSION
+import dependency.DependencyVersions.KOTLINX_SERIALIZATION_VERSION
 import dependency.DependencyVersions.MOCKK_VERSION
 import dependency.DependencyVersions.POI_VERSION
 import dependency.DependencyVersions.QUERY_DSL_JSON_EXTENSION_VERSION
 import dependency.DependencyVersions.QUERY_DSL_VERSION
 import dependency.DependencyVersions.SPRING_CLOUD_VERSION
+import dependency.DependencyVersions.SPRINGDOC_VERSION
 import dependency.DependencyVersions.THE_MOMENT_THE_SDK_VERSION
 
 object Dependencies {
@@ -91,6 +94,14 @@ object Dependencies {
     const val SPRING_SECURITY_TEST = "org.springframework.security:spring-security-test"
     const val JUNIT_PLATFORM_LAUNCHER = "org.junit.platform:junit-platform-launcher"
     const val MOCKK = "io.mockk:mockk:${MOCKK_VERSION}"
+
+    // Kotlin Multiplatform
+    const val KOTLINX_SERIALIZATION_JSON =
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:${KOTLINX_SERIALIZATION_VERSION}"
+    const val KOTLINX_DATETIME =
+        "org.jetbrains.kotlinx:kotlinx-datetime:${KOTLINX_DATETIME_VERSION}"
+    const val SPRINGDOC_OPENAPI =
+        "org.springdoc:springdoc-openapi-starter-webmvc-ui:${SPRINGDOC_VERSION}"
 
     // BOM
     const val SPRING_BOOT_BOM = "org.springframework.boot:spring-boot-dependencies:${plugin.PluginVersions.SPRING_BOOT_VERSION}"

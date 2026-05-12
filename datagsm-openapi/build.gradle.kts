@@ -8,6 +8,7 @@ plugins {
 dependencies {
     // Common Module
     implementation(project(":datagsm-common"))
+    implementation(dependency.Dependencies.KOTLINX_DATETIME)
 
     // Development Tools
     developmentOnly(dependency.Dependencies.SPRING_BOOT_DEVTOOLS)
