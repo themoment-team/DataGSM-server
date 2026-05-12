@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController
 import team.themoment.datagsm.common.domain.auth.entity.constant.ApiKeyScope
 import team.themoment.datagsm.common.domain.club.dto.request.ClubReqDto
 import team.themoment.datagsm.common.domain.club.dto.request.QueryClubReqDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubListResDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubResDto
 import team.themoment.datagsm.openapi.domain.club.service.CreateClubService
 import team.themoment.datagsm.openapi.domain.club.service.DeleteClubService
 import team.themoment.datagsm.openapi.domain.club.service.ModifyClubService
 import team.themoment.datagsm.openapi.domain.club.service.QueryClubService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.datagsm.shared.domain.club.dto.ClubListResDto
+import team.themoment.datagsm.shared.domain.club.dto.ClubResDto
 
 @Tag(name = "Club", description = "동아리 관련 API")
 @RestController

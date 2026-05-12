@@ -20,8 +20,6 @@ import team.themoment.datagsm.common.domain.auth.entity.constant.ApiKeyScope
 import team.themoment.datagsm.common.domain.project.dto.request.EndProjectReqDto
 import team.themoment.datagsm.common.domain.project.dto.request.ProjectReqDto
 import team.themoment.datagsm.common.domain.project.dto.request.QueryProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectListResDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectResDto
 import team.themoment.datagsm.openapi.domain.project.service.CreateProjectService
 import team.themoment.datagsm.openapi.domain.project.service.DeleteProjectService
 import team.themoment.datagsm.openapi.domain.project.service.EndProjectService
@@ -29,6 +27,8 @@ import team.themoment.datagsm.openapi.domain.project.service.ModifyProjectServic
 import team.themoment.datagsm.openapi.domain.project.service.QueryProjectService
 import team.themoment.datagsm.openapi.domain.project.service.ReactivateProjectService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.datagsm.shared.domain.project.dto.ProjectListResDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectResDto
 
 @Tag(name = "Project", description = "프로젝트 관련 API")
 @RestController

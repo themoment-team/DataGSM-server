@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.project.dto.request.EndProjectReqDto
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatus
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
 import team.themoment.datagsm.openapi.domain.project.service.EndProjectService
+import team.themoment.datagsm.shared.domain.project.constant.ProjectStatus
 import team.themoment.sdk.exception.ExpectedException
 
 @Service

@@ -4,14 +4,14 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import team.themoment.datagsm.common.domain.club.dto.internal.ClubSummaryDto
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.project.dto.request.ProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectResDto
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
-import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.openapi.domain.project.service.ModifyProjectService
+import team.themoment.datagsm.shared.domain.club.dto.ClubSummaryDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectResDto
+import team.themoment.datagsm.shared.domain.student.dto.ParticipantInfoDto
 import team.themoment.sdk.exception.ExpectedException
 
 @Service

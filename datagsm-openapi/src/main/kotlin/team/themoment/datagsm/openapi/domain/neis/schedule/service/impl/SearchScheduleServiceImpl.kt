@@ -1,11 +1,12 @@
 package team.themoment.datagsm.openapi.domain.neis.schedule.service.impl
 
+import kotlinx.datetime.toKotlinLocalDate
 import org.springframework.stereotype.Service
 import team.themoment.datagsm.common.domain.neis.dto.schedule.request.QueryScheduleReqDto
-import team.themoment.datagsm.common.domain.neis.dto.schedule.response.ScheduleInfoResDto
-import team.themoment.datagsm.common.domain.neis.dto.schedule.response.ScheduleResDto
 import team.themoment.datagsm.common.domain.neis.schedule.repository.ScheduleRedisRepository
 import team.themoment.datagsm.openapi.domain.neis.schedule.service.SearchScheduleService
+import team.themoment.datagsm.shared.domain.neis.schedule.dto.ScheduleInfoResDto
+import team.themoment.datagsm.shared.domain.neis.schedule.dto.ScheduleResDto
 
 @Service
 class SearchScheduleServiceImpl(
@@ -37,7 +38,7 @@ class SearchScheduleServiceImpl(
                         schoolName = schedule.schoolName,
                         officeCode = schedule.officeCode,
                         officeName = schedule.officeName,
-                        scheduleDate = schedule.date,
+                        scheduleDate = schedule.date.toKotlinLocalDate(),
                         academicYear = schedule.academicYear,
                         eventName = schedule.eventName,
                         eventContent = schedule.eventContent,

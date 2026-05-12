@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import team.themoment.datagsm.common.domain.club.dto.request.ClubReqDto
 import team.themoment.datagsm.common.domain.club.dto.request.QueryClubReqDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubListResDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubResDto
+import team.themoment.datagsm.shared.domain.club.dto.ClubListResDto
+import team.themoment.datagsm.shared.domain.club.dto.ClubResDto
 import team.themoment.datagsm.web.domain.club.service.CreateClubExcelService
 import team.themoment.datagsm.web.domain.club.service.CreateClubService
 import team.themoment.datagsm.web.domain.club.service.DeleteClubService

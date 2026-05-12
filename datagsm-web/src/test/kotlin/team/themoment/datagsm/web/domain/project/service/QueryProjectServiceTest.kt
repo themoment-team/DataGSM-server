@@ -9,11 +9,11 @@ import io.mockk.verify
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.project.dto.request.QueryProjectReqDto
 import team.themoment.datagsm.common.domain.project.entity.ProjectJpaEntity
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatus
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
+import team.themoment.datagsm.shared.domain.project.constant.ProjectStatus
 import team.themoment.datagsm.web.domain.project.service.impl.QueryProjectServiceImpl
 
 class QueryProjectServiceTest :

@@ -8,8 +8,8 @@ import team.themoment.datagsm.common.domain.student.dto.internal.BatchOperationF
 import team.themoment.datagsm.common.domain.student.dto.internal.BatchOperationType
 import team.themoment.datagsm.common.domain.student.dto.request.BatchOperationReqDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 
 class BatchOperationServiceImplTest :
     BehaviorSpec({

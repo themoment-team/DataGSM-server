@@ -1,7 +1,7 @@
 package team.themoment.datagsm.web.domain.project.service
 
 import team.themoment.datagsm.common.domain.project.dto.request.QueryProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectListResDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectListResDto
 
 interface QueryProjectService {
     fun execute(queryReq: QueryProjectReqDto): ProjectListResDto

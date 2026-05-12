@@ -9,16 +9,16 @@ import io.mockk.verify
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.student.dto.request.QueryStudentReqDto
 import team.themoment.datagsm.common.domain.student.entity.DormitoryRoomNumber
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.StudentNumber
-import team.themoment.datagsm.common.domain.student.entity.constant.Major
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.openapi.domain.student.service.impl.QueryStudentServiceImpl
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
+import team.themoment.datagsm.shared.domain.student.constant.Major
+import team.themoment.datagsm.shared.domain.student.constant.Sex
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 
 class QueryStudentServiceTest :
     DescribeSpec({

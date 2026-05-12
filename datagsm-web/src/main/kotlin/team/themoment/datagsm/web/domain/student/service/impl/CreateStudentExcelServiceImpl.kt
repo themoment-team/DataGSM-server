@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 import team.themoment.datagsm.common.domain.student.dto.internal.ExcelColumnDto
 import team.themoment.datagsm.common.domain.student.dto.internal.ExcelRowDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 import team.themoment.datagsm.web.domain.student.service.CreateStudentExcelService
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets

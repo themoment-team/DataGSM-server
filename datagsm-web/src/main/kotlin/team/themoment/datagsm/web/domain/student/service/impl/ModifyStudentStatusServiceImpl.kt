@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentStatusReqDto
-import team.themoment.datagsm.common.domain.student.entity.constant.StudentRole
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.common.domain.webhook.dto.payload.StudentStatusChangedData
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
 import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
+import team.themoment.datagsm.shared.domain.student.constant.StudentRole
 import team.themoment.datagsm.web.domain.student.service.ModifyStudentStatusService
 import team.themoment.sdk.exception.ExpectedException
 

@@ -7,7 +7,7 @@ import io.mockk.every
 import io.mockk.mockk
 import team.themoment.datagsm.common.domain.account.entity.AccountJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
+import team.themoment.datagsm.shared.domain.student.constant.Sex
 import team.themoment.datagsm.web.domain.student.dto.request.UpdateMyGithubIdReqDto
 import team.themoment.datagsm.web.global.security.provider.CurrentUserProvider
 import team.themoment.sdk.exception.ExpectedException

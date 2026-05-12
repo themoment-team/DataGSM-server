@@ -6,11 +6,12 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.datetime.toKotlinLocalDate
 import team.themoment.datagsm.common.domain.neis.dto.meal.request.QueryMealReqDto
 import team.themoment.datagsm.common.domain.neis.meal.entity.MealRedisEntity
-import team.themoment.datagsm.common.domain.neis.meal.entity.constant.MealType
 import team.themoment.datagsm.common.domain.neis.meal.repository.MealRedisRepository
 import team.themoment.datagsm.openapi.domain.neis.meal.service.impl.SearchMealServiceImpl
+import team.themoment.datagsm.shared.domain.neis.meal.constant.MealType
 import java.time.LocalDate
 
 class SearchMealServiceTest :
@@ -139,8 +140,8 @@ class SearchMealServiceTest :
                         val result = searchMealService.execute(QueryMealReqDto(date = null, fromDate = fromDate, toDate = toDate))
 
                         result.meals.size shouldBe 2
-                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 16)
-                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 17)
+                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 16).toKotlinLocalDate()
+                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 17).toKotlinLocalDate()
 
                         verify(exactly = 1) { mockMealRepository.findByDateBetween(fromDate, toDate) }
                     }
@@ -189,8 +190,8 @@ class SearchMealServiceTest :
                         val result = searchMealService.execute(QueryMealReqDto(date = null, fromDate = fromDate, toDate = null))
 
                         result.meals.size shouldBe 2
-                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 17)
-                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 18)
+                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 17).toKotlinLocalDate()
+                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 18).toKotlinLocalDate()
 
                         verify(exactly = 1) { mockMealRepository.findByDateGreaterThanEqual(fromDate) }
                     }
@@ -239,8 +240,8 @@ class SearchMealServiceTest :
                         val result = searchMealService.execute(QueryMealReqDto(date = null, fromDate = null, toDate = toDate))
 
                         result.meals.size shouldBe 2
-                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 16)
-                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 17)
+                        result.meals[0].mealDate shouldBe LocalDate.of(2025, 12, 16).toKotlinLocalDate()
+                        result.meals[1].mealDate shouldBe LocalDate.of(2025, 12, 17).toKotlinLocalDate()
 
                         verify(exactly = 1) { mockMealRepository.findByDateLessThanEqual(toDate) }
                     }

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.themoment.datagsm.common.domain.auth.entity.constant.ApiKeyScope
 import team.themoment.datagsm.common.domain.neis.dto.schedule.request.QueryScheduleReqDto
-import team.themoment.datagsm.common.domain.neis.dto.schedule.response.ScheduleResDto
 import team.themoment.datagsm.openapi.domain.neis.schedule.service.SearchScheduleService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.datagsm.shared.domain.neis.schedule.dto.ScheduleResDto
 
 @Tag(name = "Schedule", description = "학사일정 정보 조회 API")
 @RestController

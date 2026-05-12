@@ -6,6 +6,7 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.datetime.toKotlinLocalDate
 import team.themoment.datagsm.common.domain.neis.dto.schedule.request.QueryScheduleReqDto
 import team.themoment.datagsm.common.domain.neis.schedule.entity.ScheduleRedisEntity
 import team.themoment.datagsm.common.domain.neis.schedule.repository.ScheduleRedisRepository
@@ -53,7 +54,7 @@ class SearchScheduleServiceTest :
 
                         result.schedules.size shouldBe 1
                         result.schedules[0].scheduleId shouldBe "7380292_20251216"
-                        result.schedules[0].scheduleDate shouldBe targetDate
+                        result.schedules[0].scheduleDate shouldBe targetDate.toKotlinLocalDate()
                         result.schedules[0].eventName shouldBe "2학기 2차 지필평가"
                         result.schedules[0].targetGrades shouldBe listOf(1, 2, 3)
 
@@ -121,8 +122,8 @@ class SearchScheduleServiceTest :
                         val result = searchScheduleService.execute(QueryScheduleReqDto(date = null, fromDate = fromDate, toDate = toDate))
 
                         result.schedules.size shouldBe 2
-                        result.schedules[0].scheduleDate shouldBe LocalDate.of(2025, 12, 16)
-                        result.schedules[1].scheduleDate shouldBe LocalDate.of(2025, 12, 17)
+                        result.schedules[0].scheduleDate shouldBe LocalDate.of(2025, 12, 16).toKotlinLocalDate()
+                        result.schedules[1].scheduleDate shouldBe LocalDate.of(2025, 12, 17).toKotlinLocalDate()
 
                         verify(exactly = 1) { mockScheduleRepository.findByDateBetween(fromDate, toDate) }
                     }

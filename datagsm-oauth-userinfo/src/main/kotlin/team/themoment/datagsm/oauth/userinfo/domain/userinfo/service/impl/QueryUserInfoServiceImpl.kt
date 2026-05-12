@@ -3,11 +3,11 @@ package team.themoment.datagsm.oauth.userinfo.domain.userinfo.service.impl
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.account.dto.response.AccountInfoResDto
-import team.themoment.datagsm.common.domain.club.dto.internal.ClubSummaryDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentResDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.oauth.userinfo.domain.userinfo.service.QueryUserInfoService
 import team.themoment.datagsm.oauth.userinfo.global.security.provider.CurrentUserProvider
+import team.themoment.datagsm.shared.domain.club.dto.ClubSummaryDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentResDto
 
 @Service
 class QueryUserInfoServiceImpl(

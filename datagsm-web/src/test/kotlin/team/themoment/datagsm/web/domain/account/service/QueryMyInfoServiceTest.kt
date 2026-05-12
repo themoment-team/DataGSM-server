@@ -8,12 +8,12 @@ import io.mockk.verify
 import team.themoment.datagsm.common.domain.account.entity.AccountJpaEntity
 import team.themoment.datagsm.common.domain.account.entity.constant.AccountRole
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.student.entity.DormitoryRoomNumber
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.StudentNumber
-import team.themoment.datagsm.common.domain.student.entity.constant.Major
-import team.themoment.datagsm.common.domain.student.entity.constant.Sex
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
+import team.themoment.datagsm.shared.domain.student.constant.Major
+import team.themoment.datagsm.shared.domain.student.constant.Sex
 import team.themoment.datagsm.web.domain.account.service.impl.QueryMyInfoServiceImpl
 import team.themoment.datagsm.web.global.security.provider.CurrentUserProvider
 

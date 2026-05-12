@@ -4,15 +4,15 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.dto.request.QueryClubReqDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubListResDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubResDto
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
-import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.openapi.domain.club.service.QueryClubService
+import team.themoment.datagsm.shared.domain.club.constant.ClubType
+import team.themoment.datagsm.shared.domain.club.dto.ClubListResDto
+import team.themoment.datagsm.shared.domain.club.dto.ClubResDto
+import team.themoment.datagsm.shared.domain.student.dto.ParticipantInfoDto
 
 @Service
 class QueryClubServiceImpl(

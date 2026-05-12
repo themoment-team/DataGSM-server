@@ -5,15 +5,15 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.dto.request.ClubReqDto
-import team.themoment.datagsm.common.domain.club.dto.response.ClubResDto
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubStatus
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
-import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.common.domain.webhook.dto.payload.ClubUpdatedData
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
 import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
+import team.themoment.datagsm.shared.domain.club.constant.ClubStatus
+import team.themoment.datagsm.shared.domain.club.dto.ClubResDto
+import team.themoment.datagsm.shared.domain.student.dto.ParticipantInfoDto
 import team.themoment.datagsm.web.domain.club.service.ModifyClubService
 import team.themoment.sdk.exception.ExpectedException
 

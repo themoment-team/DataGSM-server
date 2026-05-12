@@ -1,12 +1,13 @@
 package team.themoment.datagsm.openapi.domain.neis.timetable.service.impl
 
+import kotlinx.datetime.toKotlinLocalDate
 import org.springframework.stereotype.Service
 import team.themoment.datagsm.common.domain.neis.dto.timetable.request.QueryTimetableReqDto
-import team.themoment.datagsm.common.domain.neis.dto.timetable.response.TimetableInfoResDto
-import team.themoment.datagsm.common.domain.neis.dto.timetable.response.TimetableResDto
 import team.themoment.datagsm.common.domain.neis.timetable.entity.TimetableRedisEntity
 import team.themoment.datagsm.common.domain.neis.timetable.repository.TimetableRedisRepository
 import team.themoment.datagsm.openapi.domain.neis.timetable.service.SearchTimetableService
+import team.themoment.datagsm.shared.domain.neis.timetable.dto.TimetableInfoResDto
+import team.themoment.datagsm.shared.domain.neis.timetable.dto.TimetableResDto
 
 @Service
 class SearchTimetableServiceImpl(
@@ -42,7 +43,7 @@ class SearchTimetableServiceImpl(
             schoolName = schoolName,
             officeCode = officeCode,
             officeName = officeName,
-            timetableDate = date,
+            timetableDate = date.toKotlinLocalDate(),
             academicYear = academicYear,
             semester = semester,
             grade = grade,

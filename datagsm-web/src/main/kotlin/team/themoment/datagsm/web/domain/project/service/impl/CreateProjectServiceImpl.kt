@@ -3,18 +3,18 @@ package team.themoment.datagsm.web.domain.project.service.impl
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import team.themoment.datagsm.common.domain.club.dto.internal.ClubSummaryDto
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
 import team.themoment.datagsm.common.domain.project.dto.request.ProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectResDto
 import team.themoment.datagsm.common.domain.project.entity.ProjectJpaEntity
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatus
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
-import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.common.domain.webhook.dto.payload.ProjectCreatedData
 import team.themoment.datagsm.common.domain.webhook.entity.constant.WebhookEvent
 import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
+import team.themoment.datagsm.shared.domain.club.dto.ClubSummaryDto
+import team.themoment.datagsm.shared.domain.project.constant.ProjectStatus
+import team.themoment.datagsm.shared.domain.project.dto.ProjectResDto
+import team.themoment.datagsm.shared.domain.student.dto.ParticipantInfoDto
 import team.themoment.datagsm.web.domain.project.service.CreateProjectService
 import team.themoment.sdk.exception.ExpectedException
 

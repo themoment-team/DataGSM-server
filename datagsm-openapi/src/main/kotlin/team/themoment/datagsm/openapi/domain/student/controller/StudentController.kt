@@ -19,12 +19,12 @@ import team.themoment.datagsm.common.domain.auth.entity.constant.ApiKeyScope
 import team.themoment.datagsm.common.domain.student.dto.request.CreateStudentReqDto
 import team.themoment.datagsm.common.domain.student.dto.request.QueryStudentReqDto
 import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentReqDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentListResDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentResDto
 import team.themoment.datagsm.openapi.domain.student.service.CreateStudentService
 import team.themoment.datagsm.openapi.domain.student.service.ModifyStudentService
 import team.themoment.datagsm.openapi.domain.student.service.QueryStudentService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.datagsm.shared.domain.student.dto.StudentListResDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentResDto
 
 @Tag(name = "Student", description = "학생 관련 API")
 @RestController

@@ -7,8 +7,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import team.themoment.datagsm.common.domain.project.entity.ProjectJpaEntity
-import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatus
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
+import team.themoment.datagsm.shared.domain.project.constant.ProjectStatus
 import team.themoment.datagsm.web.domain.project.service.impl.ReactivateProjectServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional

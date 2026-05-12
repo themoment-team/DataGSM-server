@@ -24,9 +24,9 @@ import team.themoment.datagsm.common.domain.student.dto.request.CreateStudentReq
 import team.themoment.datagsm.common.domain.student.dto.request.QueryStudentReqDto
 import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentReqDto
 import team.themoment.datagsm.common.domain.student.dto.request.UpdateStudentStatusReqDto
-import team.themoment.datagsm.common.domain.student.dto.response.GraduateStudentResDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentListResDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentResDto
+import team.themoment.datagsm.shared.domain.student.dto.GraduateStudentResDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentListResDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentResDto
 import team.themoment.datagsm.web.domain.student.dto.request.UpdateMyGithubIdReqDto
 import team.themoment.datagsm.web.domain.student.dto.request.UpdateMySpecialtyReqDto
 import team.themoment.datagsm.web.domain.student.service.BatchOperationService

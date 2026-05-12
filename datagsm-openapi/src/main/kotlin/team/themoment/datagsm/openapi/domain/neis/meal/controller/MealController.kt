@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import team.themoment.datagsm.common.domain.auth.entity.constant.ApiKeyScope
 import team.themoment.datagsm.common.domain.neis.dto.meal.request.QueryMealReqDto
-import team.themoment.datagsm.common.domain.neis.dto.meal.response.MealResDto
 import team.themoment.datagsm.openapi.domain.neis.meal.service.SearchMealService
 import team.themoment.datagsm.openapi.global.security.annotation.RequireScope
+import team.themoment.datagsm.shared.domain.neis.meal.dto.MealResDto
 
 @Tag(name = "Meal", description = "급식 정보 조회 API")
 @RestController

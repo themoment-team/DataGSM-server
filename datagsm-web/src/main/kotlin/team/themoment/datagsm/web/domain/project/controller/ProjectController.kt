@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 import team.themoment.datagsm.common.domain.project.dto.request.EndProjectReqDto
 import team.themoment.datagsm.common.domain.project.dto.request.ProjectReqDto
 import team.themoment.datagsm.common.domain.project.dto.request.QueryProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectListResDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectResDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectListResDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectResDto
 import team.themoment.datagsm.web.domain.project.service.CreateProjectService
 import team.themoment.datagsm.web.domain.project.service.DeleteProjectService
 import team.themoment.datagsm.web.domain.project.service.EndProjectService

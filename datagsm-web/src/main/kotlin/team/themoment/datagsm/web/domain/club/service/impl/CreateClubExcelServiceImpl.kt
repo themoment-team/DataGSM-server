@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import team.themoment.datagsm.common.domain.club.dto.internal.ClubInfoDto
-import team.themoment.datagsm.common.domain.club.entity.constant.ClubStatus
 import team.themoment.datagsm.common.domain.club.repository.ClubJpaRepository
+import team.themoment.datagsm.shared.domain.club.constant.ClubStatus
 import team.themoment.datagsm.web.domain.club.service.CreateClubExcelService
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets

@@ -6,6 +6,7 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.datetime.toKotlinLocalDate
 import team.themoment.datagsm.common.domain.neis.dto.timetable.request.QueryTimetableReqDto
 import team.themoment.datagsm.common.domain.neis.timetable.entity.TimetableRedisEntity
 import team.themoment.datagsm.common.domain.neis.timetable.repository.TimetableRedisRepository
@@ -130,8 +131,8 @@ class SearchTimetableServiceTest :
                             )
 
                         result.timetables.size shouldBe 2
-                        result.timetables[0].timetableDate shouldBe fromDate
-                        result.timetables[1].timetableDate shouldBe toDate
+                        result.timetables[0].timetableDate shouldBe fromDate.toKotlinLocalDate()
+                        result.timetables[1].timetableDate shouldBe toDate.toKotlinLocalDate()
 
                         verify(exactly = 1) {
                             mockTimetableRepository.findByGradeAndClassNumAndDateBetween(1, 1, fromDate, toDate)
@@ -171,7 +172,7 @@ class SearchTimetableServiceTest :
                             )
 
                         result.timetables.size shouldBe 1
-                        result.timetables[0].timetableDate shouldBe fromDate
+                        result.timetables[0].timetableDate shouldBe fromDate.toKotlinLocalDate()
 
                         verify(exactly = 1) {
                             mockTimetableRepository.findByGradeAndClassNumAndDateGreaterThanEqual(1, 1, fromDate)
@@ -210,7 +211,7 @@ class SearchTimetableServiceTest :
                             )
 
                         result.timetables.size shouldBe 1
-                        result.timetables[0].timetableDate shouldBe toDate
+                        result.timetables[0].timetableDate shouldBe toDate.toKotlinLocalDate()
 
                         verify(exactly = 1) {
                             mockTimetableRepository.findByGradeAndClassNumAndDateLessThanEqual(1, 1, toDate)

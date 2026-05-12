@@ -1,11 +1,12 @@
 package team.themoment.datagsm.openapi.domain.neis.meal.service.impl
 
+import kotlinx.datetime.toKotlinLocalDate
 import org.springframework.stereotype.Service
 import team.themoment.datagsm.common.domain.neis.dto.meal.request.QueryMealReqDto
-import team.themoment.datagsm.common.domain.neis.dto.meal.response.MealInfoResDto
-import team.themoment.datagsm.common.domain.neis.dto.meal.response.MealResDto
 import team.themoment.datagsm.common.domain.neis.meal.repository.MealRedisRepository
 import team.themoment.datagsm.openapi.domain.neis.meal.service.SearchMealService
+import team.themoment.datagsm.shared.domain.neis.meal.dto.MealInfoResDto
+import team.themoment.datagsm.shared.domain.neis.meal.dto.MealResDto
 
 @Service
 class SearchMealServiceImpl(
@@ -37,7 +38,7 @@ class SearchMealServiceImpl(
                         schoolName = meal.schoolName,
                         officeCode = meal.officeCode,
                         officeName = meal.officeName,
-                        mealDate = meal.date,
+                        mealDate = meal.date.toKotlinLocalDate(),
                         mealType = meal.type,
                         mealMenu = meal.menu,
                         mealAllergyInfo = meal.allergyInfo,

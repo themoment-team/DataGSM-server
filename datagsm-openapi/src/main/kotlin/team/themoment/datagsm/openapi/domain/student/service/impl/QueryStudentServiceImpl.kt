@@ -3,12 +3,12 @@ package team.themoment.datagsm.openapi.domain.student.service.impl
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import team.themoment.datagsm.common.domain.club.dto.internal.ClubSummaryDto
 import team.themoment.datagsm.common.domain.student.dto.request.QueryStudentReqDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentListResDto
-import team.themoment.datagsm.common.domain.student.dto.response.StudentResDto
 import team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository
 import team.themoment.datagsm.openapi.domain.student.service.QueryStudentService
+import team.themoment.datagsm.shared.domain.club.dto.ClubSummaryDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentListResDto
+import team.themoment.datagsm.shared.domain.student.dto.StudentResDto
 
 @Service
 class QueryStudentServiceImpl(

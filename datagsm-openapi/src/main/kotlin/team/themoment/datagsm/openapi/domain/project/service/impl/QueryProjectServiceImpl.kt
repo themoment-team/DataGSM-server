@@ -3,13 +3,13 @@ package team.themoment.datagsm.openapi.domain.project.service.impl
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import team.themoment.datagsm.common.domain.club.dto.internal.ClubSummaryDto
 import team.themoment.datagsm.common.domain.project.dto.request.QueryProjectReqDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectListResDto
-import team.themoment.datagsm.common.domain.project.dto.response.ProjectResDto
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
-import team.themoment.datagsm.common.domain.student.dto.internal.ParticipantInfoDto
 import team.themoment.datagsm.openapi.domain.project.service.QueryProjectService
+import team.themoment.datagsm.shared.domain.club.dto.ClubSummaryDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectListResDto
+import team.themoment.datagsm.shared.domain.project.dto.ProjectResDto
+import team.themoment.datagsm.shared.domain.student.dto.ParticipantInfoDto
 
 @Service
 class QueryProjectServiceImpl(
