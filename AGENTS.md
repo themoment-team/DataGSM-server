@@ -66,5 +66,5 @@ datagsm-server/
 
 ## Notes
 
-- 파일 변경을 제안할 때는 `.gitignore`와 `.geminiignore`를 항상 확인하세요.
+- 파일 변경을 제안할 때는 `.gitignore`를 항상 확인하세요.
 - 코드를 분석할 때는 다중 모듈 구조와 모듈 간 의존을 고려하세요 (`datagsm-common`은 모든 실행 모듈의 base).
