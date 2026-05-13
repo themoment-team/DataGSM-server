@@ -20,8 +20,10 @@ datagsm-server/
 ├── datagsm-common/              # 공유 Entity/DTO/Repository/Config, Health API (실행 모듈 아님)
 ├── datagsm-oauth-authorization/ # OAuth2 인증, 계정 라이프사이클(회원가입, 비밀번호 재설정)
 ├── datagsm-oauth-userinfo/      # OAuth2 UserInfo 엔드포인트 (외부 클라이언트용)
-├── datagsm-openapi/             # 외부 공개 API (API Key 인증): student, club, project, webhook, neis
-└── datagsm-web/                 # 웹 서비스 API: account, auth, application, client, student, club, project, utility (Excel 처리 포함)
+├── datagsm-openapi/             # 외부 공개 API (API Key 인증)
+│                                #   도메인: student, club, project, webhook, neis
+└── datagsm-web/                 # 웹 서비스 API (Excel 처리 포함)
+                                 #   도메인: account, auth, application, client, student, club, project, utility
 ```
 
 각 모듈은 도메인별로 `controller/ → service/ → repository/` + `entity/`, `dto/` 구조를 따릅니다.
