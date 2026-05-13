@@ -2,99 +2,69 @@
 
 ## Project Overview
 
-DataGSM is a Spring Boot REST API service providing school information (students, clubs, meals, schedules) for Gwangju Software Meister High School. The system uses Google OAuth2 authentication with JWT token and API key management.
+DataGSM은 광주소프트웨어마이스터고등학교의 학교 정보(학생, 동아리, 급식, 시간표 등)를 제공하는 Spring Boot REST API 서버입니다. Google OAuth2(JWT) 인증과 API Key 기반 외부 공개 API를 함께 제공합니다.
 
 ## Tech Stack
 
-- **Backend**: Kotlin, Spring Boot 4.0, Spring Security, Spring Data JPA
-- **Database**: MySQL (main data), Redis (caching, sessions)
-- **Query & Integration**: QueryDSL for complex queries, OpenFeign for external APIs
-- **Serialization**: Jackson 3.0 for JSON processing
-- **Testing**: Kotest + MockK + JUnit 5 (Given-When-Then style)
+- **Language / Framework**: Kotlin 2.3.10, Spring Boot 4.0.3, Spring Security, Spring Data JPA
+- **Build**: Gradle (Java 25 toolchain), multi-module
+- **Database**: MySQL (main), Redis (cache, session)
+- **Query / Integration**: QueryDSL, OpenFeign
+- **Serialization**: Jackson 3.0
+- **Testing**: Kotest (`DescribeSpec`) + MockK + JUnit 5
 
-## Project Structure (Multi-module)
+## Project Structure
 
 ```
 datagsm-server/
-├── datagsm-common/            # Shared library (Entity, DTO, Repository, Config, Health API)
-├── datagsm-oauth-authorization/ # OAuth2 authentication, account lifecycle (signup, password reset)
-├── datagsm-oauth-userinfo/    # OAuth2 UserInfo endpoint (external clients)
-├── datagsm-openapi/           # Public read-only API (students, clubs, NEIS)
-└── datagsm-web/               # Web service API (user features, admin features, Excel)
+├── datagsm-common/              # 공유 Entity/DTO/Repository/Config, Health API (실행 모듈 아님)
+├── datagsm-oauth-authorization/ # OAuth2 인증, 계정 라이프사이클(회원가입, 비밀번호 재설정)
+├── datagsm-oauth-userinfo/      # OAuth2 UserInfo 엔드포인트 (외부 클라이언트용)
+├── datagsm-openapi/             # 외부 공개 API (API Key 인증): student, club, project, webhook, neis
+└── datagsm-web/                 # 웹 서비스 API: account, auth, application, client, student, club, project, utility (Excel 처리 포함)
 ```
 
-Each module follows: `controller/`, `service/`, `repository/`, `entity/`, `dto/`
+각 모듈은 도메인별로 `controller/ → service/ → repository/` + `entity/`, `dto/` 구조를 따릅니다.
 
-**Note**: `/v1/health` endpoint is provided by `HealthController` in `datagsm-common/global/controller/` and is shared across all modules.
+**Key Paths**
+
+- `/v1/health` 엔드포인트는 `datagsm-common`의 `HealthController`가 제공하며 모든 실행 모듈에 공유됩니다.
+- 공통 Entity: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/domain/`
+- 공통 예외 핸들러: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
+- API 응답 래퍼: `CommonApiResponse`를 사용하세요.
 
 ## Commands
 
 - Build: `./gradlew build`
 - Test: `./gradlew test`
-- Format: `./gradlew ktlintFormat`
-- Run: `./gradlew :<module>:bootRun`
+- Format (commit 전 필수): `./gradlew ktlintFormat`
+- Run a module: `./gradlew :<module>:bootRun` (실행 가능 모듈: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`)
 
-## Coding Conventions
+## Core Rules (요약)
 
-### Kotlin Style
+상세 규칙은 `.claude/rules/`에 정의되어 있습니다. 아래는 매 세션 적용되는 최소 규칙입니다.
 
-- Prefer `val` over `var`. Use `var` only when reassignment is strictly required.
-- Always use constructor injection — never `@Autowired` field injection.
-- Use Kotlin null-safety features (`?.`, `?:`) instead of `!!`.
-- Do NOT add excessive comments — only where logic is not self-evident.
+- **계층**: Controller → Service → Repository 패턴을 유지하세요. Service 인터페이스(`*Service`)와 구현체(`*ServiceImpl`)를 분리하세요.
+- **DI**: 항상 생성자 주입을 사용하세요. `@Autowired` 필드 주입은 금지입니다.
+- **불변성**: `val`을 우선 사용하세요. `var`는 재할당이 반드시 필요한 경우(루프 누적, Logback 주입 등)에만 사용하세요.
+- **Null 안전성**: `!!`를 사용하지 말고 `?.`, `?:`, `requireNotNull`을 사용하세요.
+- **트랜잭션**: `@Transactional`은 **메서드 레벨에만** 붙이세요. 읽기는 `readOnly = true`, 쓰기는 기본 `@Transactional`을 사용하세요.
+- **JPA**: N+1을 피하기 위해 Fetch Join 또는 `@EntityGraph`를 사용하세요.
+- **테스트**: Kotest `DescribeSpec` + MockK + Given-When-Then 구조를 사용하세요. 테스트 이름은 한국어로 작성하세요 (`describe("클래스명 클래스의")`).
+- **주석**: 로직이 자명하지 않은 경우에만 작성하세요. 과도한 주석을 추가하지 마세요.
 
-### DTO Annotations
+## Detailed Rules (`.claude/rules/`)
 
-- Jackson: always use `@field:` target — never `@param:` (e.g., `@field:JsonProperty("user_name")`)
-- Swagger/OpenAPI:
-  - Request DTOs (`*ReqDto`): use `@param:Schema`
-  - Response DTOs (`*ResDto`): use `@field:Schema`
+해당 파일을 작업할 때 자동 로드됩니다.
 
-### API Conventions
-
-- 1–2 query params: use `@RequestParam`; 3+ or with validation: use `@ModelAttribute` + DTO
-- `@RequestBody` variable: `reqDto`; `@ModelAttribute` query: `queryReq`
-- `@Transactional` must be at **method level only** — never class level
-- Read operations: `@Transactional(readOnly = true)` / Write operations: `@Transactional`
-- Use `CommonApiResponse` wrapper for all API responses
-
-### Logging
-
-- English only — verb-led sentences
-- SLF4J `{}` placeholder only — no Kotlin string interpolation, no colon separators
-- Correct: `logger().info("Deleted {} expired API keys", deletedCount)`
-- Wrong: `logger().error("에러 발생: $message")` or `logger().error("Failed: {}", msg)`
-
-### Exception Handling
-
-- Use `ExpectedException` directly — do NOT subclass it
-- Message: Korean (합쇼체) + period, no dynamic data (IDs, names, variables)
-- Correct: `ExpectedException("학생을 찾을 수 없습니다.", HttpStatus.NOT_FOUND)`
-- Wrong: `ExpectedException("학생 ID: $id 없음", HttpStatus.NOT_FOUND)`
-
-### Commit Conventions
-
-Format: `type(scope): 설명`
-
-- Types: `add` / `update` / `fix` / `refactor` / `ci/cd` / `docs` / `test` / `merge`
-- Scope: domain name (`auth`, `student`, `club`, `application`, etc.) — NOT module names
-- Cross-cutting only: `global`, `ci/cd`, or module names (`web`, `openapi`, `oauth`)
-- Description: Korean, no period
-
-## Key Practices
-
-### JPA
-- Avoid N+1 problems — use Fetch Join or `@EntityGraph`
-- Use `@Transactional(readOnly = true)` for read operations
-
-### Testing
-- Write Kotest tests for business logic
-- Use Kotest `DescribeSpec` with `describe/context/it` blocks
-- Use MockK for mocking; Given-When-Then structure inside `it` blocks
-- Test names in Korean: `describe("클래스명 클래스의")`, `describe("메서드명 메서드는")`
+- `kotlin-style.md` — `val/var`, 생성자 주입, null 안전성
+- `dto-annotations.md` — Jackson/Swagger의 `@field:` vs `@param:` 규칙
+- `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO 명명, `@Transactional` 배치
+- `logging.md` — 영어 only, SLF4J `{}` 플레이스홀더, 콜론 구분자 금지
+- `exception.md` — `ExpectedException` 사용 규칙과 메시지 포맷
+- `commit-conventions.md` — 커밋 `type(scope): 설명` 규칙 (scope는 도메인명)
 
 ## Notes
 
-- This project uses Java 25 for Gradle builds
-- Always check `.gitignore` and `.geminiignore` when suggesting file changes
-- When analyzing code, consider the multi-module structure
+- 파일 변경을 제안할 때는 `.gitignore`와 `.geminiignore`를 항상 확인하세요.
+- 코드를 분석할 때는 다중 모듈 구조와 모듈 간 의존을 고려하세요 (`datagsm-common`은 모든 실행 모듈의 base).
