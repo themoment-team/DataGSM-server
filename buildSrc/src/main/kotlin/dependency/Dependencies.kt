@@ -5,6 +5,7 @@ import dependency.DependencyVersions.BUCKET4J_VERSION
 import dependency.DependencyVersions.JJWT_VERSION
 import dependency.DependencyVersions.KOTEST_VERSION
 import dependency.DependencyVersions.KOTLIN_COROUTINES_VERSION
+import dependency.DependencyVersions.KOTLIN_POET_VERSION
 import dependency.DependencyVersions.MOCKK_VERSION
 import dependency.DependencyVersions.POI_VERSION
 import dependency.DependencyVersions.QUERY_DSL_JSON_EXTENSION_VERSION
@@ -71,6 +72,10 @@ object Dependencies {
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
     const val KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${KOTLIN_COROUTINES_VERSION}"
     const val JACKSON_KOTLIN = "tools.jackson.module:jackson-module-kotlin"
+
+    // KotlinPoet (KSP code generation)
+    const val KOTLIN_POET = "com.squareup:kotlinpoet:${KOTLIN_POET_VERSION}"
+    const val KOTLIN_POET_KSP = "com.squareup:kotlinpoet-ksp:${KOTLIN_POET_VERSION}"
 
     // Jackson
     const val JACKSON_DATABIND = "tools.jackson.core:jackson-databind"
