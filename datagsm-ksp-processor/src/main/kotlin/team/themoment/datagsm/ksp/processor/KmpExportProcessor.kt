@@ -44,6 +44,8 @@ class KmpExportProcessor(
     // Files are written directly to the filesystem (bypassing codeGenerator.createNewFile)
     // to prevent the KSP 2.x bug: KaInvalidLifetimeOwnerAccessException caused by
     // Analysis API PSI invalidation when createNewFile triggers a second round.
+    // TODO: revert to codeGenerator.createNewFile() after upgrading past KSP 2.3.6 once the
+    //  PSI invalidation issue is fixed upstream — restores incremental processing support.
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val symbols =
             resolver
@@ -93,6 +95,9 @@ class KmpExportProcessor(
 
     // Writes directly to the filesystem to bypass codeGenerator.createNewFile(),
     // preventing the KSP 2.x PSI invalidation bug.
+    // TODO: switch back to fileSpec.writeTo(codeGenerator) once KSP no longer triggers
+    //  KaInvalidLifetimeOwnerAccessException — this restores KSP-tracked output and
+    //  incremental processing.
     private fun writeFileDirect(classInfo: ClassInfo) {
         val fileSpec = if (classInfo.isEnum) buildEnumFileSpec(classInfo) else buildDataClassFileSpec(classInfo)
         val pkgDir = classInfo.targetPackage.replace('.', File.separatorChar)
