@@ -23,7 +23,7 @@ DataGSM 프로젝트에 기여해주셔서 감사합니다! 이 문서는 프로
 프로젝트 개발을 위해 다음 환경이 필요합니다:
 
 - **JDK**: Java 25 (Temurin 권장)
-- **Kotlin**: 2.3.0 (자동 설정)
+- **Kotlin**: 2.3.10 (자동 설정)
 - **Gradle**: 최신 버전 (래퍼 사용)
 - **Docker & Docker Compose**: 로컬 개발용
 - **MySQL**: 8.0
