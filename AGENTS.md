@@ -33,7 +33,7 @@ datagsm-server/
 - `/v1/health` 엔드포인트는 `datagsm-common`의 `HealthController`가 제공하며 모든 실행 모듈에 공유됩니다.
 - 공통 Entity: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/domain/`
 - 공통 예외 핸들러: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
-- API 응답: 성공 응답은 DTO를 직접 반환합니다. 예외 응답은 `GlobalExceptionHandler`가 `CommonApiResponse`로 래핑합니다.
+- API 응답: 컨트롤러는 DTO를 직접 반환하며, `the-sdk`의 `ResponseBodyAdvice`가 자동으로 `CommonApiResponse`로 래핑합니다. 데이터 없이 메시지만 반환하는 경우(예: 삭제 작업)에만 `CommonApiResponse<Nothing>`을 명시적으로 사용하세요. 예외 응답은 `GlobalExceptionHandler`가 `CommonApiResponse`로 래핑합니다.
 
 ## Commands
 
