@@ -49,7 +49,6 @@ dependencies {
     implementation(project(":datagsm-ksp-annotations"))
     ksp(project(":datagsm-ksp-processor"))
 
-
     // Database
     api(dependency.Dependencies.MYSQL_CONNECTOR)
 

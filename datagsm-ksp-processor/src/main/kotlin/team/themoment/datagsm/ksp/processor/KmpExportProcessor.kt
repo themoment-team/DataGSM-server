@@ -26,8 +26,11 @@ class KmpExportProcessor(
     private val logger: KSPLogger,
     private val outputDir: File,
 ) : SymbolProcessor {
-
-    private data class PropertyInfo(val name: String, val serialName: String, val typeName: TypeName)
+    private data class PropertyInfo(
+        val name: String,
+        val serialName: String,
+        val typeName: TypeName,
+    )
 
     private data class ClassInfo(
         val targetPackage: String,
@@ -42,10 +45,11 @@ class KmpExportProcessor(
     // to prevent the KSP 2.x bug: KaInvalidLifetimeOwnerAccessException caused by
     // Analysis API PSI invalidation when createNewFile triggers a second round.
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val symbols = resolver
-            .getSymbolsWithAnnotation("team.themoment.datagsm.ksp.annotation.KmpExport")
-            .filterIsInstance<KSClassDeclaration>()
-            .toList()
+        val symbols =
+            resolver
+                .getSymbolsWithAnnotation("team.themoment.datagsm.ksp.annotation.KmpExport")
+                .filterIsInstance<KSClassDeclaration>()
+                .toList()
 
         val classInfos = symbols.mapNotNull { collectClassInfo(it) }
 
@@ -60,25 +64,28 @@ class KmpExportProcessor(
 
         return when (classDecl.classKind) {
             ClassKind.ENUM_CLASS -> {
-                val entries = classDecl.declarations
-                    .filterIsInstance<KSClassDeclaration>()
-                    .filter { it.classKind == ClassKind.ENUM_ENTRY }
-                    .map { it.simpleName.asString() }
-                    .toList()
+                val entries =
+                    classDecl.declarations
+                        .filterIsInstance<KSClassDeclaration>()
+                        .filter { it.classKind == ClassKind.ENUM_ENTRY }
+                        .map { it.simpleName.asString() }
+                        .toList()
                 ClassInfo(targetPackage, className, isEnum = true, enumEntries = entries, properties = emptyList())
             }
             else -> {
-                val properties = (classDecl.primaryConstructor?.parameters ?: emptyList())
-                    .mapNotNull { param ->
-                        val propName = param.name?.asString() ?: return@mapNotNull null
-                        val serialName = resolveSerialName(param, propName, className)
-                        val typeName = runCatching { mapType(param.type.resolve()) }
-                            .getOrElse { e ->
-                                logger.error("Failed to resolve type for $className.$propName: ${e.message}")
-                                return@mapNotNull null
-                            }
-                        PropertyInfo(propName, serialName, typeName)
-                    }
+                val properties =
+                    (classDecl.primaryConstructor?.parameters ?: emptyList())
+                        .mapNotNull { param ->
+                            val propName = param.name?.asString() ?: return@mapNotNull null
+                            val serialName = resolveSerialName(param, propName, className)
+                            val typeName =
+                                runCatching { mapType(param.type.resolve()) }
+                                    .getOrElse { e ->
+                                        logger.error("Failed to resolve type for $className.$propName: ${e.message}")
+                                        return@mapNotNull null
+                                    }
+                            PropertyInfo(propName, serialName, typeName)
+                        }
                 ClassInfo(targetPackage, className, isEnum = false, enumEntries = emptyList(), properties = properties)
             }
         }
@@ -94,15 +101,17 @@ class KmpExportProcessor(
         outFile.writeText(fileSpec.toString())
     }
 
-    private fun transformPackage(pkg: String): String =
-        pkg.replace(".common.domain.", ".shared.domain.")
+    private fun transformPackage(pkg: String): String = pkg.replace(".common.domain.", ".shared.domain.")
 
     private fun buildEnumFileSpec(info: ClassInfo): FileSpec {
-        val enumBuilder = TypeSpec.enumBuilder(info.className)
-            .addAnnotation(serializableAnnotation())
-            .addAnnotation(jsExportAnnotation())
+        val enumBuilder =
+            TypeSpec
+                .enumBuilder(info.className)
+                .addAnnotation(serializableAnnotation())
+                .addAnnotation(jsExportAnnotation())
         info.enumEntries.forEach { enumBuilder.addEnumConstant(it) }
-        return FileSpec.builder(info.targetPackage, info.className)
+        return FileSpec
+            .builder(info.targetPackage, info.className)
             .addType(enumBuilder.build())
             .build()
     }
@@ -113,33 +122,42 @@ class KmpExportProcessor(
 
         for (prop in info.properties) {
             constructorBuilder.addParameter(
-                ParameterSpec.builder(prop.name, prop.typeName)
+                ParameterSpec
+                    .builder(prop.name, prop.typeName)
                     .addAnnotation(serialNameAnnotation(prop.serialName))
-                    .build()
+                    .build(),
             )
             propSpecs.add(PropertySpec.builder(prop.name, prop.typeName).initializer(prop.name).build())
         }
 
-        val typeSpec = TypeSpec.classBuilder(info.className)
-            .addModifiers(KModifier.DATA)
-            .addAnnotation(serializableAnnotation())
-            .addAnnotation(jsExportAnnotation())
-            .addAnnotation(suppressAnnotation("NON_EXPORTABLE_TYPE"))
-            .primaryConstructor(constructorBuilder.build())
-            .addProperties(propSpecs)
-            .build()
+        val typeSpec =
+            TypeSpec
+                .classBuilder(info.className)
+                .addModifiers(KModifier.DATA)
+                .addAnnotation(serializableAnnotation())
+                .addAnnotation(jsExportAnnotation())
+                .addAnnotation(suppressAnnotation("NON_EXPORTABLE_TYPE"))
+                .primaryConstructor(constructorBuilder.build())
+                .addProperties(propSpecs)
+                .build()
 
-        return FileSpec.builder(info.targetPackage, info.className)
+        return FileSpec
+            .builder(info.targetPackage, info.className)
             .addType(typeSpec)
             .build()
     }
 
-    private fun resolveSerialName(param: KSValueParameter, propName: String, ownerClassName: String): String {
-        val value = param.annotations
-            .find { it.shortName.asString() == "JsonProperty" }
-            ?.arguments
-            ?.find { it.name?.asString() == "value" || it.name == null }
-            ?.value as? String
+    private fun resolveSerialName(
+        param: KSValueParameter,
+        propName: String,
+        ownerClassName: String,
+    ): String {
+        val value =
+            param.annotations
+                .find { it.shortName.asString() == "JsonProperty" }
+                ?.arguments
+                ?.find { it.name?.asString() == "value" || it.name == null }
+                ?.value as? String
         if (value == null) {
             logger.warn("@KmpExport $ownerClassName.$propName has no @field:JsonProperty — using property name '$propName' as SerialName")
         }
@@ -150,25 +168,28 @@ class KmpExportProcessor(
         val declaration = type.declaration
         val qualifiedName = declaration.qualifiedName?.asString() ?: ""
 
-        val baseClassName = javaTimeToKotlinxDatetime(qualifiedName)
-            ?: if (qualifiedName.contains(".common.domain.")) {
-                val remapped = qualifiedName.replace(".common.domain.", ".shared.domain.")
-                ClassName(remapped.substringBeforeLast("."), declaration.simpleName.asString())
-            } else {
-                ClassName(qualifiedName.substringBeforeLast("."), declaration.simpleName.asString())
-            }
-
-        val resolved = if (type.arguments.isEmpty()) {
-            baseClassName
-        } else {
-            val mappedArgs = type.arguments.map { arg ->
-                when (arg.variance) {
-                    Variance.STAR -> STAR
-                    else -> arg.type?.resolve()?.let { mapType(it) } ?: STAR
+        val baseClassName =
+            javaTimeToKotlinxDatetime(qualifiedName)
+                ?: if (qualifiedName.contains(".common.domain.")) {
+                    val remapped = qualifiedName.replace(".common.domain.", ".shared.domain.")
+                    ClassName(remapped.substringBeforeLast("."), declaration.simpleName.asString())
+                } else {
+                    ClassName(qualifiedName.substringBeforeLast("."), declaration.simpleName.asString())
                 }
+
+        val resolved =
+            if (type.arguments.isEmpty()) {
+                baseClassName
+            } else {
+                val mappedArgs =
+                    type.arguments.map { arg ->
+                        when (arg.variance) {
+                            Variance.STAR -> STAR
+                            else -> arg.type?.resolve()?.let { mapType(it) } ?: STAR
+                        }
+                    }
+                baseClassName.parameterizedBy(*mappedArgs.toTypedArray())
             }
-            baseClassName.parameterizedBy(*mappedArgs.toTypedArray())
-        }
 
         return if (type.isMarkedNullable) resolved.copy(nullable = true) else resolved
     }
@@ -182,19 +203,19 @@ class KmpExportProcessor(
             else -> null
         }
 
-    private fun serializableAnnotation() =
-        AnnotationSpec.builder(ClassName("kotlinx.serialization", "Serializable")).build()
+    private fun serializableAnnotation() = AnnotationSpec.builder(ClassName("kotlinx.serialization", "Serializable")).build()
 
-    private fun jsExportAnnotation() =
-        AnnotationSpec.builder(ClassName("kotlin.js", "JsExport")).build()
+    private fun jsExportAnnotation() = AnnotationSpec.builder(ClassName("kotlin.js", "JsExport")).build()
 
     private fun serialNameAnnotation(name: String) =
-        AnnotationSpec.builder(ClassName("kotlinx.serialization", "SerialName"))
+        AnnotationSpec
+            .builder(ClassName("kotlinx.serialization", "SerialName"))
             .addMember("%S", name)
             .build()
 
     private fun suppressAnnotation(vararg keys: String) =
-        AnnotationSpec.builder(ClassName("kotlin", "Suppress"))
+        AnnotationSpec
+            .builder(ClassName("kotlin", "Suppress"))
             .apply { keys.forEach { addMember("%S", it) } }
             .build()
 }

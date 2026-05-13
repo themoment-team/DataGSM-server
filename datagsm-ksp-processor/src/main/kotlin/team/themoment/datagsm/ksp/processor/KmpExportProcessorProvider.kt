@@ -7,8 +7,9 @@ import java.io.File
 
 class KmpExportProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        val outputDir = environment.options["kmpOutputDir"]
-            ?: error("KmpExport: kmpOutputDir option is required")
+        val outputDir =
+            environment.options["kmpOutputDir"]
+                ?: error("KmpExport: kmpOutputDir option is required")
         return KmpExportProcessor(environment.logger, File(outputDir))
     }
 }

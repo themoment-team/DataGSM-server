@@ -35,8 +35,9 @@ kotlin {
     sourceSets {
         commonMain {
             kotlin.srcDir(
-                project(":datagsm-common").layout.buildDirectory
-                    .dir("generated/kmp-export/main/kotlin")
+                project(":datagsm-common")
+                    .layout.buildDirectory
+                    .dir("generated/kmp-export/main/kotlin"),
             )
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
