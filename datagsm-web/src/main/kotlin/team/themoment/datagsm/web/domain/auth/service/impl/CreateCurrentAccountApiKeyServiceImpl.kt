@@ -32,14 +32,14 @@ class CreateCurrentAccountApiKeyServiceImpl(
 
         val isAdmin = account.role in setOf(AccountRole.ADMIN, AccountRole.ROOT)
 
-        val validScopes = if (isAdmin) ApiKeyScope.getAllScopes() else ApiKeyScope.READ_ONLY_SCOPES
+        val validScopes = if (isAdmin) ApiKeyScope.getAllScopes() else ApiKeyScope.USER_ALLOWED_SCOPES
         val invalidScopes = reqDto.scopes.filter { it !in validScopes }
         if (invalidScopes.isNotEmpty()) {
             throw ExpectedException(
                 if (isAdmin) {
                     "유효하지 않은 권한 범위입니다."
                 } else {
-                    "일반 사용자는 읽기 전용 권한 범위만 사용 가능합니다."
+                    "일반 사용자에게 허용되지 않는 권한 범위입니다."
                 },
                 HttpStatus.BAD_REQUEST,
             )

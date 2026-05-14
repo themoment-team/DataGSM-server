@@ -44,7 +44,7 @@ class ModifyCurrentAccountApiKeyServiceImpl(
         }
 
         val isAdmin = account.role in setOf(AccountRole.ADMIN, AccountRole.ROOT)
-        val validScopes = if (isAdmin) ApiKeyScope.getAllScopes() else ApiKeyScope.READ_ONLY_SCOPES
+        val validScopes = if (isAdmin) ApiKeyScope.getAllScopes() else ApiKeyScope.USER_ALLOWED_SCOPES
         val invalidScopes = reqDto.scopes.filter { it !in validScopes }
         if (invalidScopes.isNotEmpty()) {
             logger().warn(
