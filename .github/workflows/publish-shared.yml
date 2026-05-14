@@ -55,7 +55,7 @@ jobs:
       - name: Compile JS artifact
         run: >
           ./gradlew :datagsm-common:kspKotlin
-          :datagsm-shared:jsProductionLibraryCompileSync
+          :datagsm-shared:jsBrowserProductionLibraryDistribution
           -PSHARED_VERSION=${{ needs.generate-version.outputs.version }}
       - name: Publish to npmjs.com
         run: npm publish --access public
