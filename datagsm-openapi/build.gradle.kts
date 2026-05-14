@@ -9,6 +9,9 @@ dependencies {
     // Common Module
     implementation(project(":datagsm-common"))
 
+    // Disender (Discord webhook notifier)
+    implementation(dependency.Dependencies.DISENDER_SPRING_BOOT_STARTER)
+
     // Development Tools
     developmentOnly(dependency.Dependencies.SPRING_BOOT_DEVTOOLS)
     developmentOnly(dependency.Dependencies.SPRING_DOCKER_SUPPORT)
