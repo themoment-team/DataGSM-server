@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-DataGSM은 광주소프트웨어마이스터고등학교의 학교 정보(학생, 동아리, 급식, 시간표 등)를 제공하는 Spring Boot REST API 서버입니다. Google OAuth2(JWT) 인증과 API Key 기반 외부 공개 API를 함께 제공합니다.
+DataGSM is a Spring Boot REST API server that exposes Gwangju Software Meister High School data (students, clubs, meals, timetable, etc.). It provides Google OAuth2 (JWT) authentication for internal clients and API-Key authentication for external public APIs.
 
 ## Tech Stack
 
@@ -17,42 +17,42 @@ DataGSM은 광주소프트웨어마이스터고등학교의 학교 정보(학생
 
 ```
 datagsm-server/
-├── datagsm-common/              # 공유 Entity/DTO/Repository/Config, Health API (실행 모듈 아님)
-├── datagsm-oauth-authorization/ # OAuth2 인증, 계정 라이프사이클(회원가입, 비밀번호 재설정)
-├── datagsm-oauth-userinfo/      # OAuth2 UserInfo 엔드포인트 (외부 클라이언트용)
-├── datagsm-openapi/             # 외부 공개 API (API Key 인증)
-│                                #   도메인: student, club, project, webhook, neis
-└── datagsm-web/                 # 웹 서비스 API (Excel 처리 포함)
-                                 #   도메인: account, auth, application, client, student, club, project, utility
+├── datagsm-common/              # Shared Entity/DTO/Repository/Config, Health API (library module)
+├── datagsm-oauth-authorization/ # OAuth2 authentication, account lifecycle (signup, password reset)
+├── datagsm-oauth-userinfo/      # OAuth2 UserInfo endpoint (for external clients)
+├── datagsm-openapi/             # External public API (API-Key auth)
+│                                #   Domains: student, club, project, webhook, neis
+└── datagsm-web/                 # Web service API (includes Excel processing)
+                                 #   Domains: account, auth, application, client, student, club, project, utility
 ```
 
-각 모듈은 도메인별로 `controller/ → service/ → repository/` + `entity/`, `dto/` 구조를 따릅니다.
+Each module follows the `controller/ → service/ → repository/` layering with `entity/` and `dto/` packages per domain.
 
 **Key Paths**
 
-- `/v1/health` 엔드포인트는 `datagsm-common`의 `HealthController`가 제공하며 모든 실행 모듈에 공유됩니다.
-- 공통 Entity: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/domain/`
-- 공통 예외 핸들러: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
-- API 응답: 컨트롤러는 DTO를 직접 반환하며, `the-sdk`의 `ResponseBodyAdvice`가 자동으로 `CommonApiResponse`로 래핑합니다. 데이터 없이 메시지만 반환하는 경우(예: 삭제 작업)에만 `CommonApiResponse<Nothing>`을 명시적으로 사용하세요. 예외 응답은 `GlobalExceptionHandler`가 `CommonApiResponse`로 래핑합니다.
+- The `/v1/health` endpoint is served by `HealthController` in `datagsm-common` and is shared across all runnable modules.
+- Shared entities: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/domain/`
+- Global exception handling: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
+- API response: controllers return DTOs directly — `the-sdk`'s `ResponseBodyAdvice` automatically wraps them in `CommonApiResponse`. Use `CommonApiResponse<Nothing>` explicitly only when no data is returned (e.g. delete operations). Exception responses are wrapped by `GlobalExceptionHandler`.
 
 ## Runnable Modules
 
-`./gradlew :<module>:bootRun`으로 실행하는 모듈: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`. (`datagsm-common`은 라이브러리 모듈로 실행 대상이 아닙니다.)
+Modules launched via `./gradlew :<module>:bootRun`: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`. (`datagsm-common` is a library module and is not run directly.)
 
 ## Detailed Rules (`.claude/rules/`)
 
-해당 파일을 작업할 때 자동 로드됩니다.
+The following rule files are auto-loaded when working on related code:
 
-- `kotlin-style.md` — `val/var`, 생성자 주입, null 안전성
-- `dto-annotations.md` — Jackson/Swagger의 `@field:` vs `@param:` 규칙
-- `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO 명명, `@Transactional` 배치
-- `logging.md` — 영어 only, SLF4J `{}` 플레이스홀더, 콜론 구분자 금지
-- `exception.md` — `ExpectedException` 사용 규칙과 메시지 포맷
-- `testing.md` — Kotest `DescribeSpec` + MockK + Given-When-Then 구조
-- `comments.md` — 주석 작성 기준 (자명하지 않은 로직에만)
-- `commit-conventions.md` — 커밋 `type(scope): 설명` 규칙 (scope는 도메인명)
+- `kotlin-style.md` — `val/var`, constructor injection, null safety
+- `dto-annotations.md` — Jackson/Swagger `@field:` vs `@param:` targets
+- `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO naming, `@Transactional` placement
+- `logging.md` — English only, SLF4J `{}` placeholder, no colon separators
+- `exception.md` — `ExpectedException` usage and message format
+- `testing.md` — Kotest `DescribeSpec` + MockK + Given-When-Then structure
+- `comments.md` — when to write comments (only for non-obvious logic)
+- `commit-conventions.md` — commit `type(scope): description` rules (scope = domain name)
 
 ## Notes
 
-- 파일 변경을 제안할 때는 `.gitignore`를 항상 확인하세요.
-- 코드를 분석할 때는 다중 모듈 구조와 모듈 간 의존을 고려하세요 (`datagsm-common`은 모든 실행 모듈의 base).
+- Always check `.gitignore` before proposing file changes.
+- When analyzing code, consider the multi-module structure and inter-module dependencies (`datagsm-common` is the base for every runnable module).
