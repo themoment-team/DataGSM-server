@@ -42,17 +42,6 @@ datagsm-server/
 - Format (commit 전 필수): `./gradlew ktlintFormat`
 - Run a module: `./gradlew :<module>:bootRun` (실행 가능 모듈: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`)
 
-## Core Rules (요약)
-
-상세 규칙은 `.claude/rules/`에 정의되어 있습니다. 아래는 매 세션 적용되는 최소 규칙입니다.
-
-- **계층**: Controller → Service → Repository 패턴을 유지하세요. Service 인터페이스(`*Service`)와 구현체(`*ServiceImpl`)를 분리하세요.
-- **DI**: 항상 생성자 주입을 사용하세요. `@Autowired` 필드 주입은 금지입니다.
-- **불변성**: `val`을 우선 사용하세요. `var`는 재할당이 반드시 필요한 경우(루프 누적, Logback 주입 등)에만 사용하세요.
-- **Null 안전성**: `!!`를 사용하지 말고 `?.`, `?:`, `requireNotNull`을 사용하세요.
-- **트랜잭션**: `@Transactional`은 **메서드 레벨에만** 붙이세요. 읽기는 `readOnly = true`, 쓰기는 기본 `@Transactional`을 사용하세요.
-- **JPA**: N+1을 피하기 위해 Fetch Join 또는 `@EntityGraph`를 사용하세요.
-
 ## Detailed Rules (`.claude/rules/`)
 
 해당 파일을 작업할 때 자동 로드됩니다.
