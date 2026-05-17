@@ -35,12 +35,9 @@ datagsm-server/
 - 공통 예외 핸들러: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
 - API 응답: 컨트롤러는 DTO를 직접 반환하며, `the-sdk`의 `ResponseBodyAdvice`가 자동으로 `CommonApiResponse`로 래핑합니다. 데이터 없이 메시지만 반환하는 경우(예: 삭제 작업)에만 `CommonApiResponse<Nothing>`을 명시적으로 사용하세요. 예외 응답은 `GlobalExceptionHandler`가 `CommonApiResponse`로 래핑합니다.
 
-## Commands
+## Runnable Modules
 
-- Build: `./gradlew build`
-- Test: `./gradlew test`
-- Format (commit 전 필수): `./gradlew ktlintFormat`
-- Run a module: `./gradlew :<module>:bootRun` (실행 가능 모듈: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`)
+`./gradlew :<module>:bootRun`으로 실행하는 모듈: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`. (`datagsm-common`은 라이브러리 모듈로 실행 대상이 아닙니다.)
 
 ## Detailed Rules (`.claude/rules/`)
 
