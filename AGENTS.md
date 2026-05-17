@@ -52,8 +52,6 @@ datagsm-server/
 - **Null 안전성**: `!!`를 사용하지 말고 `?.`, `?:`, `requireNotNull`을 사용하세요.
 - **트랜잭션**: `@Transactional`은 **메서드 레벨에만** 붙이세요. 읽기는 `readOnly = true`, 쓰기는 기본 `@Transactional`을 사용하세요.
 - **JPA**: N+1을 피하기 위해 Fetch Join 또는 `@EntityGraph`를 사용하세요.
-- **테스트**: Kotest `DescribeSpec` + MockK + Given-When-Then 구조를 사용하세요. 테스트 이름은 한국어로 작성하세요 (`describe("클래스명 클래스의")`).
-- **주석**: 로직이 자명하지 않은 경우에만 작성하세요. 과도한 주석을 추가하지 마세요.
 
 ## Detailed Rules (`.claude/rules/`)
 
@@ -64,6 +62,8 @@ datagsm-server/
 - `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO 명명, `@Transactional` 배치
 - `logging.md` — 영어 only, SLF4J `{}` 플레이스홀더, 콜론 구분자 금지
 - `exception.md` — `ExpectedException` 사용 규칙과 메시지 포맷
+- `testing.md` — Kotest `DescribeSpec` + MockK + Given-When-Then 구조
+- `comments.md` — 주석 작성 기준 (자명하지 않은 로직에만)
 - `commit-conventions.md` — 커밋 `type(scope): 설명` 규칙 (scope는 도메인명)
 
 ## Notes
