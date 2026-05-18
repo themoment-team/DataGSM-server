@@ -36,7 +36,6 @@ Detailed rules are split into `.claude/rules/`:
 - `exception.md` — `ExpectedException` usage and message format
 - `kotlin-style.md` — `val/var`, constructor injection, null safety
 - `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO naming, `@Transactional` placement
-- `commit-conventions.md` — commit type/scope rules
 
 ## Context Compaction Rules
 
