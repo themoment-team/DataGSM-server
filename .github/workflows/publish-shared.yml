@@ -2,7 +2,12 @@ name: Publish datagsm-shared
 
 on:
   push:
-    branches: [master, feat/share-kotlin-source-to-sdk]
+    branches: [master]
+    paths:
+      - 'datagsm-common/src/main/kotlin/**/dto/**'
+      - 'datagsm-common/src/main/kotlin/**/constant/**'
+      - 'datagsm-ksp-processor/**'
+      - 'datagsm-shared/**'
   workflow_dispatch:
 
 jobs:
