@@ -1,3 +1,8 @@
+---
+paths:
+  - "**/*.kt"
+---
+
 # Logging Rules
 
 ## Style
