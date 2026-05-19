@@ -39,6 +39,7 @@ class KmpExportProcessor(
                 "kotlin.collections.MutableIterable",
             )
     }
+
     private data class PropertyInfo(
         val name: String,
         val serialName: String,
