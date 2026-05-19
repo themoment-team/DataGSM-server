@@ -2,99 +2,57 @@
 
 ## Project Overview
 
-DataGSM is a Spring Boot REST API service providing school information (students, clubs, meals, schedules) for Gwangju Software Meister High School. The system uses Google OAuth2 authentication with JWT token and API key management.
+DataGSM is a Spring Boot REST API server that exposes Gwangju Software Meister High School data (students, clubs, meals, timetable, etc.). It provides Google OAuth2 (JWT) authentication for internal clients and API-Key authentication for external public APIs.
 
 ## Tech Stack
 
-- **Backend**: Kotlin, Spring Boot 4.0, Spring Security, Spring Data JPA
-- **Database**: MySQL (main data), Redis (caching, sessions)
-- **Query & Integration**: QueryDSL for complex queries, OpenFeign for external APIs
-- **Serialization**: Jackson 3.0 for JSON processing
-- **Testing**: Kotest + MockK + JUnit 5 (Given-When-Then style)
+- **Language / Framework**: Kotlin 2.3.10, Spring Boot 4.0.3, Spring Security, Spring Data JPA
+- **Build**: Gradle (Java 25 toolchain), multi-module
+- **Database**: MySQL (main), Redis (cache, session)
+- **Query / Integration**: QueryDSL, OpenFeign
+- **Serialization**: Jackson 3.0
+- **Testing**: Kotest (`DescribeSpec`) + MockK + JUnit 5
 
-## Project Structure (Multi-module)
+## Project Structure
 
 ```
 datagsm-server/
-├── datagsm-common/            # Shared library (Entity, DTO, Repository, Config, Health API)
+├── datagsm-common/              # Shared Entity/DTO/Repository/Config, Health API (library module)
 ├── datagsm-oauth-authorization/ # OAuth2 authentication, account lifecycle (signup, password reset)
-├── datagsm-oauth-userinfo/    # OAuth2 UserInfo endpoint (external clients)
-├── datagsm-openapi/           # Public read-only API (students, clubs, NEIS)
-└── datagsm-web/               # Web service API (user features, admin features, Excel)
+├── datagsm-oauth-userinfo/      # OAuth2 UserInfo endpoint (for external clients)
+├── datagsm-openapi/             # External public API (API-Key auth)
+│                                #   Domains: student, club, project, webhook, neis
+└── datagsm-web/                 # Web service API (includes Excel processing)
+                                 #   Domains: account, auth, application, client, student, club, project, utility
 ```
 
-Each module follows: `controller/`, `service/`, `repository/`, `entity/`, `dto/`
+Each module follows the `controller/ → service/ → repository/` layering with `entity/` and `dto/` packages per domain.
 
-**Note**: `/v1/health` endpoint is provided by `HealthController` in `datagsm-common/global/controller/` and is shared across all modules.
+**Key Paths**
 
-## Commands
+- The `/v1/health` endpoint is served by `HealthController` in `datagsm-common` and is shared across all runnable modules.
+- Shared entities: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/domain/`
+- Global exception handling: `datagsm-common/src/main/kotlin/team/themoment/datagsm/common/global/common/error/`
+- API response: controllers return DTOs directly — `the-sdk`'s `ResponseBodyAdvice` automatically wraps them in `CommonApiResponse`. Use `CommonApiResponse<Nothing>` explicitly only when no data is returned (e.g. delete operations). Exception responses are wrapped by `GlobalExceptionHandler`.
 
-- Build: `./gradlew build`
-- Test: `./gradlew test`
-- Format: `./gradlew ktlintFormat`
-- Run: `./gradlew :<module>:bootRun`
+## Runnable Modules
 
-## Coding Conventions
+Modules launched via `./gradlew :<module>:bootRun`: `datagsm-oauth-authorization`, `datagsm-oauth-userinfo`, `datagsm-openapi`, `datagsm-web`. (`datagsm-common` is a library module and is not run directly.)
 
-### Kotlin Style
+## Detailed Rules (`.claude/rules/`)
 
-- Prefer `val` over `var`. Use `var` only when reassignment is strictly required.
-- Always use constructor injection — never `@Autowired` field injection.
-- Use Kotlin null-safety features (`?.`, `?:`) instead of `!!`.
-- Do NOT add excessive comments — only where logic is not self-evident.
+The following rule files are auto-loaded when working on related code:
 
-### DTO Annotations
-
-- Jackson: always use `@field:` target — never `@param:` (e.g., `@field:JsonProperty("user_name")`)
-- Swagger/OpenAPI:
-  - Request DTOs (`*ReqDto`): use `@param:Schema`
-  - Response DTOs (`*ResDto`): use `@field:Schema`
-
-### API Conventions
-
-- 1–2 query params: use `@RequestParam`; 3+ or with validation: use `@ModelAttribute` + DTO
-- `@RequestBody` variable: `reqDto`; `@ModelAttribute` query: `queryReq`
-- `@Transactional` must be at **method level only** — never class level
-- Read operations: `@Transactional(readOnly = true)` / Write operations: `@Transactional`
-- Use `CommonApiResponse` wrapper for all API responses
-
-### Logging
-
-- English only — verb-led sentences
-- SLF4J `{}` placeholder only — no Kotlin string interpolation, no colon separators
-- Correct: `logger().info("Deleted {} expired API keys", deletedCount)`
-- Wrong: `logger().error("에러 발생: $message")` or `logger().error("Failed: {}", msg)`
-
-### Exception Handling
-
-- Use `ExpectedException` directly — do NOT subclass it
-- Message: Korean (합쇼체) + period, no dynamic data (IDs, names, variables)
-- Correct: `ExpectedException("학생을 찾을 수 없습니다.", HttpStatus.NOT_FOUND)`
-- Wrong: `ExpectedException("학생 ID: $id 없음", HttpStatus.NOT_FOUND)`
-
-### Commit Conventions
-
-Format: `type(scope): 설명`
-
-- Types: `add` / `update` / `fix` / `refactor` / `ci/cd` / `docs` / `test` / `merge`
-- Scope: domain name (`auth`, `student`, `club`, `application`, etc.) — NOT module names
-- Cross-cutting only: `global`, `ci/cd`, or module names (`web`, `openapi`, `oauth`)
-- Description: Korean, no period
-
-## Key Practices
-
-### JPA
-- Avoid N+1 problems — use Fetch Join or `@EntityGraph`
-- Use `@Transactional(readOnly = true)` for read operations
-
-### Testing
-- Write Kotest tests for business logic
-- Use Kotest `DescribeSpec` with `describe/context/it` blocks
-- Use MockK for mocking; Given-When-Then structure inside `it` blocks
-- Test names in Korean: `describe("클래스명 클래스의")`, `describe("메서드명 메서드는")`
+- `kotlin-style.md` — `val/var`, constructor injection, null safety
+- `dto-annotations.md` — Jackson/Swagger `@field:` vs `@param:` targets
+- `api-conventions.md` — `@RequestParam` vs `@ModelAttribute`, DTO naming, `@Transactional` placement
+- `logging.md` — English only, SLF4J `{}` placeholder, no colon separators
+- `exception.md` — `ExpectedException` usage and message format
+- `testing.md` — Kotest `DescribeSpec` + MockK + Given-When-Then structure
+- `comments.md` — when to write comments (only for non-obvious logic)
+- `commit-conventions.md` — commit `type(scope): description` rules (scope = domain name)
 
 ## Notes
 
-- This project uses Java 25 for Gradle builds
-- Always check `.gitignore` and `.geminiignore` when suggesting file changes
-- When analyzing code, consider the multi-module structure
+- Always check `.gitignore` before proposing file changes.
+- When analyzing code, consider the multi-module structure and inter-module dependencies (`datagsm-common` is the base for every runnable module).
