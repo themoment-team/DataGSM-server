@@ -15,7 +15,6 @@ java {
 }
 
 dependencies {
-    implementation(project(":datagsm-ksp-annotations"))
     implementation("com.google.devtools.ksp:symbol-processing-api:${plugin.PluginVersions.KSP_VERSION}")
     implementation(dependency.Dependencies.KOTLIN_POET)
     implementation(dependency.Dependencies.KOTLIN_POET_KSP)

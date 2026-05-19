@@ -46,7 +46,6 @@ dependencies {
     ksp(dependency.Dependencies.QUERY_DSL_PROCESSOR)
 
     // KMP Export
-    implementation(project(":datagsm-ksp-annotations"))
     ksp(project(":datagsm-ksp-processor"))
 
     // Database

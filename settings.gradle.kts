@@ -52,7 +52,6 @@ buildCache {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("datagsm-ksp-annotations")
 include("datagsm-ksp-processor")
 include("datagsm-shared")
 include("datagsm-common")
