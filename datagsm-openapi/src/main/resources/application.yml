@@ -85,5 +85,7 @@ sdk:
 springdoc:
   swagger-ui:
     enabled: true
+disender:
+  webhook-url: ${DISENDER_WEBHOOK_URL:}
 logging:
   config: classpath:logback-spring.xml

@@ -55,13 +55,9 @@ enum class ApiKeyScope(
 
         private val ALL_SCOPES by lazy { entries.map { it.scope }.toSet() }
 
-        val READ_ONLY_SCOPES =
-            setOf(
-                STUDENT_READ.scope,
-                CLUB_READ.scope,
-                PROJECT_READ.scope,
-                NEIS_READ.scope,
-            )
+        val USER_ALLOWED_SCOPES: Set<String> by lazy {
+            entries.filter { it.accountRole == AccountRole.USER }.map { it.scope }.toSet()
+        }
 
         fun fromString(scope: String): ApiKeyScope? = entries.find { it.scope == scope }
 
