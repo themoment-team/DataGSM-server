@@ -26,6 +26,19 @@ class KmpExportProcessor(
     private val logger: KSPLogger,
     private val outputDir: File,
 ) : SymbolProcessor {
+    companion object {
+        private val ARRAY_LIKE_COLLECTIONS =
+            setOf(
+                "kotlin.collections.List",
+                "kotlin.collections.MutableList",
+                "kotlin.collections.Set",
+                "kotlin.collections.MutableSet",
+                "kotlin.collections.Collection",
+                "kotlin.collections.MutableCollection",
+                "kotlin.collections.Iterable",
+                "kotlin.collections.MutableIterable",
+            )
+    }
     private data class PropertyInfo(
         val name: String,
         val serialName: String,
@@ -141,7 +154,6 @@ class KmpExportProcessor(
                 .addModifiers(KModifier.DATA)
                 .addAnnotation(serializableAnnotation())
                 .addAnnotation(jsExportAnnotation())
-                .addAnnotation(suppressAnnotation("NON_EXPORTABLE_TYPE"))
                 .primaryConstructor(constructorBuilder.build())
                 .addProperties(propSpecs)
                 .build()
@@ -172,6 +184,17 @@ class KmpExportProcessor(
     private fun mapType(type: KSType): TypeName {
         val declaration = type.declaration
         val qualifiedName = declaration.qualifiedName?.asString() ?: ""
+
+        if (qualifiedName in ARRAY_LIKE_COLLECTIONS) {
+            val elementArg = type.arguments.firstOrNull()
+            val elementType =
+                when (elementArg?.variance) {
+                    Variance.STAR, null -> STAR
+                    else -> elementArg.type?.resolve()?.let { mapType(it) } ?: STAR
+                }
+            val arrayType = ClassName("kotlin", "Array").parameterizedBy(elementType)
+            return if (type.isMarkedNullable) arrayType.copy(nullable = true) else arrayType
+        }
 
         val baseClassName =
             javaTimeToKotlinxDatetime(qualifiedName)
