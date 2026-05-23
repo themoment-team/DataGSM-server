@@ -1,3 +1,8 @@
+---
+paths:
+  - "**/*.kt"
+---
+
 # Exception Handling Rules
 
 ## ExpectedException Usage

@@ -1,14 +1,14 @@
 ---
-name: review-pr
-description: Collect PR review comments, critically assess each one against project conventions, auto-apply valid ones, post refutation replies for invalid ones, and prompt for partial ones. Replaces resolve-pr-comments.
-compatibility: Requires git, gh (GitHub CLI), and jq
+name: resolve-reviews
+description: Collect PR review comments, critically assess each one against project conventions, auto-apply valid ones, post refutation replies for invalid ones, and prompt for partial ones.
+disable-model-invocation: true
 allowed-tools: Bash(bash *get-pr-data.sh:*), Bash(gh api:*), Bash(gh pr view:*), Bash(gh repo:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git push:*), Bash(git rev-parse:*), Bash(rm:*), Edit, Read
 ---
 
 ## Step 1 — Collect PR Data
 
 ```bash
-bash scripts/get-pr-data.sh
+bash "${CLAUDE_SKILL_DIR}/scripts/get-pr-data.sh"
 ```
 
 Output files:
@@ -24,13 +24,23 @@ gh repo view --json nameWithOwner -q .nameWithOwner
 gh pr view --json number,baseRefName -q '{number: .number, base: .baseRefName}'
 ```
 
-## Step 2 — Assess Each Comment
+## Step 2 — Load Rules and Assess Each Comment
+
+Before assessing any comment, discover and read all project convention files:
+
+```bash
+find .claude/rules -name "*.md" 2>/dev/null
+```
+
+Read each returned file in full. These are the authoritative rules for judging each review comment.
+
+**Rule priority**: `CLAUDE.md` > `.claude/rules/**` > `.gemini/styleguide.md` > `CONTRIBUTING.md`
 
 For each comment in `pr_comments.json`, apply the following **layered judgment criteria**:
 
 ### Judgment criteria (priority order)
 
-1. **Project conventions** (primary): cross-reference CLAUDE.md and CONTRIBUTING.md
+1. **Project conventions** (primary): apply rules discovered above
    - DTO annotation rules, commit scope, logging style, exception message format, etc.
 2. **Language/framework best practices** (secondary): Kotlin official guide, Spring Boot recommendations
    - Apply only when no matching project rule exists
@@ -79,7 +89,7 @@ Accept? (y / n / s = skip for now)
 ## Step 4 — Print Report
 
 ```
-## review-pr Results
+## resolve-reviews Results
 
 | # | Reviewer | File | Verdict | Rationale | Action |
 |---|----------|------|---------|-----------|--------|
@@ -105,7 +115,7 @@ gh api "repos/<owner>/<repo>/pulls/<pr_number>/comments/<comment_id>/replies" \
   -f body="<reply_body>"
 ```
 
-For reply body templates, read `references/reply-formats.md`.
+For reply body templates, read `${CLAUDE_SKILL_DIR}/references/reply-formats.md`.
 
 ## Step 7 — Cleanup
 

@@ -1,3 +1,11 @@
+---
+paths:
+  - "**/*Controller.kt"
+  - "**/*Service.kt"
+  - "**/*ServiceImpl.kt"
+  - "**/*Dto.kt"
+---
+
 # API Conventions
 
 ## Query Parameter Binding
