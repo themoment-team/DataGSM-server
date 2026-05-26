@@ -10,3 +10,6 @@ exclude:
   - codex/skills/git-commit
   - codex/skills/write-pr
   - codex/skills/test
+
+branch_prefix: update
+base_branch: develop
