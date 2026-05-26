@@ -1,5 +1,5 @@
 ---
-name: commit
+name: git-commit
 description: Create Git commits by splitting changes into logical units following project conventions. Handles Git Flow automatically — detects develop branch and checks out a feature branch before committing.
 allowed-tools: Bash
 ---
@@ -48,6 +48,7 @@ Format: `type(scope): 설명`
 ## Scope Selection
 
 For the full scope selection table and examples, read `references/scope-guide.md`.
+For commit type and scope naming conventions, read `references/commit-conventions.md`.
 
 Quick rule: run `sh scripts/discover-domains.sh` to get available domains, then pick the one matching the changed files. Use `global` / `ci/cd` / module names only for cross-cutting changes.
 

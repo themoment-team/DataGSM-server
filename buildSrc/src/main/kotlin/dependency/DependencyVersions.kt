@@ -22,5 +22,5 @@ object DependencyVersions {
 
     const val KOTLIN_POET_VERSION = "2.3.0"
   
-    const val DISENDER_VERSION = "0.1.0"
+    const val DISENDER_VERSION = "0.1.1"
 }

@@ -22,6 +22,7 @@ cat .github/PULL_REQUEST_TEMPLATE.md
 ## Step 2 — Determine Labels
 
 Read `${CLAUDE_SKILL_DIR}/references/labels.md` and select 1–2 appropriate labels based on the nature of the changes.
+Read `${CLAUDE_SKILL_DIR}/references/commit-conventions.md` for commit type and scope naming rules.
 
 ## Step 3 — Generate PR Content
 

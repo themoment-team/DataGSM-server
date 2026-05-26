@@ -4,9 +4,11 @@
 
 `type(scope): description`
 
-- **Types**: `add` / `update` / `fix` / `refactor` / `ci/cd` / `docs` / `test` / `merge`
+- **Types**: `add` / `update` / `fix` / `refactor` / `ci/cd` / `docs` / `test` / `merge` (English)
 - **Scope**: domain name (not module name)
-- **Description**: Korean, no period
+- **Description**: Korean, no period, avoid endings: `~한다/~된다`, `~하기/~하기 위해`, `~합니다/~됩니다`, `~했습니다`
+  - Good examples: `엔티티 필드 추가`, `트랜잭션 롤백 방지`, `로직 개선`
+- Subject line only (no body)
 
 ## Scope Rules
 
