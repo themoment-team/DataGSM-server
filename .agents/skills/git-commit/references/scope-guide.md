@@ -6,43 +6,31 @@
 
 Always use a domain name. Only fall back to a module name when the change is genuinely cross-cutting (affects multiple domains or the entire module).
 
-## Discover Domains at Runtime
+## Discover Scope at Runtime
 
-Run this before selecting a scope — do not use a hardcoded list:
+Do not use a hardcoded list. Determine scope from:
 
-```bash
-sh .agents/skills/git-commit/scripts/discover-domains.sh
-```
-
-Use the output as the candidate domain scope list.
-
-## Discover Modules at Runtime
-
-Run this to get the module list (strips `datagsm-` prefix for use as scope):
-
-```bash
-sh .agents/skills/git-commit/scripts/discover-modules.sh
-```
-
-Module scopes are secondary — use only when changes are cross-cutting across multiple domains within that module.
+1. `git diff --name-only` — look at changed file paths
+2. Directory structure — infer domain/module from path segments (e.g., `src/auth/`, `packages/user/`, `services/payment/`)
+3. Project-specific conventions in `CLAUDE.md` or `.claude/rules/`
 
 ## Module / Cross-cutting Names (Secondary)
 
-| Scope    | When to use                                                             |
-|----------|-------------------------------------------------------------------------|
-| `global` | Affects multiple modules                                                |
-| `ci/cd`  | Build / deployment pipelines                                            |
-| (module) | Changes scoped to an entire module (use name without `datagsm-` prefix) |
+| Scope    | When to use                              |
+|----------|------------------------------------------|
+| `global` | Affects multiple modules or the whole project |
+| `ci/cd`  | Build / deployment pipelines             |
+| (module) | Changes scoped to one module but multiple domains |
 
-## Wrong vs Correct Examples
+## Examples
 
-| Wrong                       | Correct                      | Reason                            |
-|-----------------------------|------------------------------|-----------------------------------|
-| `fix(web): API 키 삭제 버그 수정`  | `fix(auth): API 키 삭제 버그 수정`  | API key is auth domain            |
-| `update(common): 학생 엔티티 수정` | `update(student): 엔티티 필드 추가` | Student entity is student domain  |
-| `add(web): 학생 조회 필터 추가`     | `add(student): 학생 조회 필터 추가`  | Student feature is student domain |
+| Wrong | Correct | Reason |
+|-------|---------|--------|
+| `fix(module): 로그인 버그 수정` | `fix(auth): 로그인 버그 수정` | auth is the domain |
+| `update(common): 유저 엔티티 수정` | `update(user): 엔티티 필드 추가` | user entity belongs to user domain |
+| `add(module): 결제 필터 추가` | `add(payment): 결제 필터 추가` | payment feature is payment domain |
 
-## Correct Module Name Usage
+## Correct Cross-cutting Usage
 
 ```
 refactor(global): 공통 예외 처리 로직 개선
