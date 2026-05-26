@@ -1,0 +1,12 @@
+groups:
+  - claude
+  - codex
+  - gemini
+
+exclude:
+  - claude/skills/git-commit
+  - claude/skills/write-pr
+  - claude/skills/test
+  - codex/skills/git-commit
+  - codex/skills/write-pr
+  - codex/skills/test
