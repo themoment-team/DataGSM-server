@@ -11,5 +11,11 @@ exclude:
   - codex/skills/write-pr
   - codex/skills/test
 
+include:
+  - claude/hooks/ktlint
+  - claude/hooks/kotest
+  - codex/hooks/ktlint
+  - codex/hooks/kotest
+
 branch_prefix: update/
 base_branch: develop
