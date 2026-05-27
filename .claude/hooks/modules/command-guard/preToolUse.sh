@@ -1,7 +1,6 @@
 #!/bin/bash
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
-
 if [[ "$TOOL_NAME" == "Bash" ]]; then
     COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command')
     BLOCKED_PATTERNS=(
@@ -20,5 +19,4 @@ if [[ "$TOOL_NAME" == "Bash" ]]; then
         fi
     done
 fi
-
 exit 0
