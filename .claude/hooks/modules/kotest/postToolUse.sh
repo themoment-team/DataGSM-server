@@ -1,11 +1,9 @@
 #!/bin/bash
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
-
 if [[ "$TOOL_NAME" == "Edit" ]] || [[ "$TOOL_NAME" == "Write" ]]; then
     FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
     CWD=$(echo "$INPUT" | jq -r '.cwd')
-
     if [[ "$FILE_PATH" == *.kt ]] && [[ "$FILE_PATH" != */test/* ]]; then
         FILE_NAME=$(basename "$FILE_PATH")
         if [[ "$FILE_NAME" == *ServiceImpl.kt ]]; then
@@ -29,5 +27,4 @@ if [[ "$TOOL_NAME" == "Edit" ]] || [[ "$TOOL_NAME" == "Write" ]]; then
         fi
     fi
 fi
-
 exit 0
