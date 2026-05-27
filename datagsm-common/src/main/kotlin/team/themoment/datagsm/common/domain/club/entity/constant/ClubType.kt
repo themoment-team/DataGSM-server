@@ -1,5 +1,8 @@
 package team.themoment.datagsm.common.domain.club.entity.constant
 
+import team.themoment.datagsm.ksp.annotation.KmpExport
+
+@KmpExport
 enum class ClubType(
     val value: String,
 ) {

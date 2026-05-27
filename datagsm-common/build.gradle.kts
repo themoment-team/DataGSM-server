@@ -45,6 +45,9 @@ dependencies {
     api(dependency.Dependencies.QUERY_DSL)
     ksp(dependency.Dependencies.QUERY_DSL_PROCESSOR)
 
+    // KMP Export
+    ksp(project(":datagsm-ksp-processor"))
+
     // Database
     api(dependency.Dependencies.MYSQL_CONNECTOR)
 
@@ -68,8 +71,8 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
+}
 
-    sourceSets.main {
-        kotlin.srcDirs("build/generated/ksp/main/kotlin")
-    }
+ksp {
+    arg("kmpOutputDir", "${layout.buildDirectory.get().asFile}/generated/kmp-export/main/kotlin")
 }
