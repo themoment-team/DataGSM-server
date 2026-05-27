@@ -18,12 +18,14 @@ include:
   - claude/hooks/command-guard
   - claude/hooks/ktlint
   - claude/hooks/kotest
+  - claude/hooks/secret-guard
   - codex/hooks/dispatcher
   - codex/hooks-json
   - codex/hooks/logging
   - codex/hooks/command-guard
   - codex/hooks/ktlint
   - codex/hooks/kotest
+  - codex/hooks/secret-guard
 
 branch_prefix: update/
 base_branch: develop
