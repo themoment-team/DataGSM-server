@@ -11,5 +11,5 @@ exclude:
   - codex/skills/write-pr
   - codex/skills/test
 
-branch_prefix: update
+branch_prefix: update/
 base_branch: develop
