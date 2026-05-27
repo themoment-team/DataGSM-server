@@ -12,8 +12,16 @@ exclude:
   - codex/skills/test
 
 include:
+  - claude/hooks/dispatcher
+  - claude/settings
+  - claude/hooks/logging
+  - claude/hooks/command-guard
   - claude/hooks/ktlint
   - claude/hooks/kotest
+  - codex/hooks/dispatcher
+  - codex/hooks-json
+  - codex/hooks/logging
+  - codex/hooks/command-guard
   - codex/hooks/ktlint
   - codex/hooks/kotest
 
