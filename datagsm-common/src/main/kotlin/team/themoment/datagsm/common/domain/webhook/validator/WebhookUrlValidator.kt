@@ -11,16 +11,17 @@ import java.util.concurrent.TimeoutException
 object WebhookUrlValidator {
     private const val DNS_TIMEOUT_SECONDS = 3L
 
+    fun isPrivateAddress(address: InetAddress): Boolean =
+        address.isLoopbackAddress ||
+            address.isSiteLocalAddress ||
+            address.isLinkLocalAddress ||
+            address.isAnyLocalAddress
+
     fun isPrivateOrLocalUrl(url: String): Boolean =
         try {
             val host = URI(url).host ?: return true
             val addresses = resolveWithTimeout(host) ?: return true
-            addresses.any { address ->
-                address.isLoopbackAddress ||
-                    address.isSiteLocalAddress ||
-                    address.isLinkLocalAddress ||
-                    address.isAnyLocalAddress
-            }
+            addresses.any { isPrivateAddress(it) }
         } catch (e: Exception) {
             logger().warn("Blocked webhook url due to unexpected parse error {}", e.message)
             true
