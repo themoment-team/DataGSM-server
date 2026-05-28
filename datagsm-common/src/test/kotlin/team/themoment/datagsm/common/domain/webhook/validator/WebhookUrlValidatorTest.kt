@@ -149,6 +149,19 @@ class WebhookUrlValidatorTest :
                         result shouldBe true
                     }
                 }
+
+                context("존재하지 않는 도메인이 주어질 때") {
+                    it("false를 반환해야 한다") {
+                        // Given
+                        val url = "http://this-domain-does-not-exist-datagsm.invalid/hook"
+
+                        // When
+                        val result = WebhookUrlValidator.isPrivateOrLocalUrl(url)
+
+                        // Then
+                        result shouldBe false
+                    }
+                }
             }
         }
     })
