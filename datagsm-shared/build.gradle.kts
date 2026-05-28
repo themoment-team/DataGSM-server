@@ -25,11 +25,16 @@ kotlin {
     }
 
     js(IR) {
-        outputModuleName.set("@themoment-team/datagsm-shared")
+        outputModuleName.set("datagsm-shared")
         nodejs()
         browser()
         binaries.library()
         generateTypeScriptDefinitions()
+        compilations.configureEach {
+            packageJson {
+                name = "@themoment-team/datagsm-shared"
+            }
+        }
     }
 
     sourceSets {
