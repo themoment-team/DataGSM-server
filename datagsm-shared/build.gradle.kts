@@ -30,7 +30,7 @@ kotlin {
         browser()
         binaries.library()
         generateTypeScriptDefinitions()
-        compilations.configureEach {
+        compilations.named("main") {
             packageJson {
                 name = "@themoment-team/datagsm-shared"
             }
