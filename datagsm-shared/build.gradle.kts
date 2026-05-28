@@ -25,7 +25,7 @@ kotlin {
     }
 
     js(IR) {
-        outputModuleName.set("datagsm-shared")
+        outputModuleName.set("@themoment-team/datagsm-shared")
         nodejs()
         browser()
         binaries.library()
