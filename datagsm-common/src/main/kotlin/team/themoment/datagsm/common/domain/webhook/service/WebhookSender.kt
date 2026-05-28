@@ -6,6 +6,7 @@ import org.springframework.retry.annotation.Recover
 import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import team.themoment.datagsm.common.domain.webhook.validator.WebhookUrlValidator
 import team.themoment.sdk.logging.logger.logger
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -23,6 +24,10 @@ class WebhookSender {
         secret: String,
         payloadJson: String,
     ) {
+        if (WebhookUrlValidator.isPrivateOrLocalUrl(targetUrl)) {
+            logger().warn("Blocked SSRF attempt detected for webhook target url {}", targetUrl)
+            return
+        }
         val signature = computeHmacSha256(secret, payloadJson)
         restClient
             .post()
