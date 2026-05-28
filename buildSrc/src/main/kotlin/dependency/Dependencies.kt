@@ -84,6 +84,9 @@ object Dependencies {
     // Jackson
     const val JACKSON_DATABIND = "tools.jackson.core:jackson-databind"
 
+    // Apache HttpClient
+    const val HTTPCLIENT5 = "org.apache.httpcomponents.client5:httpclient5"
+
     // AWS SDK
     const val AWS_CLOUDWATCH_LOGS = "software.amazon.awssdk:cloudwatchlogs"
 
