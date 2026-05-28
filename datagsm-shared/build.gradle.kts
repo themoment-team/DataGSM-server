@@ -30,6 +30,11 @@ kotlin {
         browser()
         binaries.library()
         generateTypeScriptDefinitions()
+        compilations.named("main") {
+            packageJson {
+                name = "@themoment-team/datagsm-shared"
+            }
+        }
     }
 
     sourceSets {
