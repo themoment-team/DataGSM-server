@@ -6,6 +6,7 @@ from diagrams.aws.storage import S3
 from diagrams.onprem.vcs import Github
 from diagrams.onprem.client import User
 from diagrams.onprem.ci import GithubActions
+from diagrams.saas.chat import Discord
 
 graph_attr = {
     "fontsize": "16",
@@ -53,7 +54,7 @@ with Diagram("datagsm-server Cloud Architecture",
         s3 >> Edge(label="trigger", color="#2196f3") >> codedeploy
 
     with Cluster("Monitoring", graph_attr={"bgcolor": "#fff3e0", "style": "rounded", "margin": "10"}):
-        discord = User("Discord")
+        discord = Discord("Discord")
 
         github_actions >> Edge(label="CI/CD 알림", color="#ff9800") >> discord
 
