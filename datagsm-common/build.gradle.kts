@@ -45,6 +45,9 @@ dependencies {
     api(dependency.Dependencies.QUERY_DSL)
     ksp(dependency.Dependencies.QUERY_DSL_PROCESSOR)
 
+    // KMP Export
+    ksp(project(":datagsm-ksp-processor"))
+
     // Database
     api(dependency.Dependencies.MYSQL_CONNECTOR)
 
@@ -62,14 +65,28 @@ dependencies {
 
     // Jackson
     api(dependency.Dependencies.JACKSON_DATABIND)
+
+    // Apache HttpClient
+    api(dependency.Dependencies.HTTPCLIENT5)
+
+    // Testing
+    testImplementation(dependency.Dependencies.KOTLIN_JUNIT5)
+    testImplementation(dependency.Dependencies.KOTEST_ASSERTIONS)
+    testImplementation(dependency.Dependencies.KOTEST_RUNNER)
+    testImplementation(dependency.Dependencies.KOTEST_FRAMEWORK)
+    testRuntimeOnly(dependency.Dependencies.JUNIT_PLATFORM_LAUNCHER)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 kotlin {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
+}
 
-    sourceSets.main {
-        kotlin.srcDirs("build/generated/ksp/main/kotlin")
-    }
+ksp {
+    arg("kmpOutputDir", "${layout.buildDirectory.get().asFile}/generated/kmp-export/main/kotlin")
 }

@@ -5,6 +5,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import team.themoment.datagsm.common.domain.club.entity.ClubJpaEntity
@@ -16,6 +17,7 @@ import team.themoment.datagsm.common.domain.project.entity.constant.ProjectStatu
 import team.themoment.datagsm.common.domain.project.repository.ProjectJpaRepository
 import team.themoment.datagsm.common.domain.student.entity.StudentJpaEntity
 import team.themoment.datagsm.common.domain.student.entity.constant.Sex
+import team.themoment.datagsm.common.domain.webhook.service.WebhookPublisher
 import team.themoment.datagsm.web.domain.project.service.impl.CreateProjectServiceImpl
 import team.themoment.sdk.exception.ExpectedException
 import java.util.Optional
@@ -26,8 +28,14 @@ class CreateProjectServiceTest :
         val mockProjectRepository = mockk<ProjectJpaRepository>()
         val mockClubRepository = mockk<ClubJpaRepository>()
         val mockStudentRepository = mockk<team.themoment.datagsm.common.domain.student.repository.StudentJpaRepository>()
+        val webhookPublisher = mockk<WebhookPublisher>()
 
-        val createProjectService = CreateProjectServiceImpl(mockProjectRepository, mockClubRepository, mockStudentRepository)
+        val createProjectService =
+            CreateProjectServiceImpl(mockProjectRepository, mockClubRepository, mockStudentRepository, webhookPublisher)
+
+        beforeEach {
+            justRun { webhookPublisher.dispatch(any(), any()) }
+        }
 
         afterEach {
             clearAllMocks()

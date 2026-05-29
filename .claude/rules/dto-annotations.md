@@ -1,3 +1,8 @@
+---
+paths:
+  - "**/*Dto.kt"
+---
+
 # DTO Annotation Rules
 
 ## Jackson Serialization

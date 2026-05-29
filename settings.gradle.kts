@@ -9,10 +9,38 @@ pluginManagement {
 
 @Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         mavenCentral()
         maven("https://jitpack.io")
+        exclusiveContent {
+            forRepository {
+                ivy {
+                    name = "NodeDistributions"
+                    url = uri("https://nodejs.org/dist")
+                    patternLayout {
+                        artifact("v[revision]/[artifact](-v[revision]-[classifier]).[ext]")
+                    }
+                    metadataSources { artifact() }
+                    content { includeModule("org.nodejs", "node") }
+                }
+            }
+            filter { includeGroup("org.nodejs") }
+        }
+        exclusiveContent {
+            forRepository {
+                ivy {
+                    name = "YarnDistributions"
+                    url = uri("https://github.com/yarnpkg/yarn/releases/download")
+                    patternLayout {
+                        artifact("v[revision]/[artifact](-v[revision]).[ext]")
+                    }
+                    metadataSources { artifact() }
+                    content { includeModule("com.yarnpkg", "yarn") }
+                }
+            }
+            filter { includeGroup("com.yarnpkg") }
+        }
     }
 }
 
@@ -23,8 +51,9 @@ buildCache {
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
+include("datagsm-ksp-processor")
+include("datagsm-shared")
 include("datagsm-common")
 include("datagsm-oauth-authorization")
 include("datagsm-openapi")

@@ -1,3 +1,8 @@
+---
+paths:
+  - "**/*.kt"
+---
+
 # Kotlin Style Rules
 
 ## Immutability

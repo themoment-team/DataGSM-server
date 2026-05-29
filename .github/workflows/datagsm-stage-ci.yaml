@@ -30,7 +30,7 @@ jobs:
             const allowedScopes = [
               'global', 'account', 'auth', 'client', 'club',
               'neis', 'oauth', 'project', 'student', 'utility',
-              'web', 'oauth', 'openapi', 'ci/cd', 'application'
+              'web', 'oauth', 'openapi', 'ci/cd', 'application', 'webhook'
             ];
 
             const versionPattern = /^v\d{8}\.\d+$/;
@@ -76,7 +76,7 @@ jobs:
           PR_AUTHOR="${{ github.event.pull_request.user.login }}"
           gh pr edit $PR_NUMBER --repo ${{ github.repository }} --add-label "waiting for review:검토 대기"
           gh pr edit $PR_NUMBER --repo ${{ github.repository }} --add-assignee "$PR_AUTHOR"
-          ALL_REVIEWERS="wwwcomcomcomcom,ZaMan-O,hongjm0912,snowykte0426"
+          ALL_REVIEWERS="wwwcomcomcomcom,ZaMan0806,hongjm0912,snowykte0426"
           REVIEWERS=$(echo "$ALL_REVIEWERS" | tr ',' '\n' | grep -v "^${PR_AUTHOR}$" | tr '\n' ',' | sed 's/,$//')
           if [ -n "$REVIEWERS" ]; then
             gh pr edit $PR_NUMBER --repo ${{ github.repository }} --add-reviewer "$REVIEWERS"

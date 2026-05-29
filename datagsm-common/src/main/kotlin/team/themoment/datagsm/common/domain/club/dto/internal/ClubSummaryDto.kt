@@ -2,7 +2,9 @@ package team.themoment.datagsm.common.domain.club.dto.internal
 
 import io.swagger.v3.oas.annotations.media.Schema
 import team.themoment.datagsm.common.domain.club.entity.constant.ClubType
+import team.themoment.datagsm.ksp.annotation.KmpExport
 
+@KmpExport
 data class ClubSummaryDto(
     @field:Schema(description = "동아리 ID", example = "1")
     val id: Long,

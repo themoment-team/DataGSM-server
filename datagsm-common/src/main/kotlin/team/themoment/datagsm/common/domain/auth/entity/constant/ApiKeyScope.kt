@@ -26,6 +26,9 @@ enum class ApiKeyScope(
     // NEIS scopes
     NEIS_ALL("neis:*", "NEIS 데이터 모든 권한", AccountRole.ADMIN),
     NEIS_READ("neis:read", "NEIS 데이터 조회", AccountRole.USER),
+
+    // Webhook scopes
+    WEBHOOK_WRITE("webhook:write", "Webhook 등록/수정/삭제", AccountRole.USER),
     ;
 
     override fun getAuthority(): String = "SCOPE_$scope"
@@ -47,17 +50,14 @@ enum class ApiKeyScope(
                 "neis" to "NEIS",
                 "admin" to "관리자",
                 "client" to "클라이언트",
+                "webhook" to "Webhook",
             )
 
         private val ALL_SCOPES by lazy { entries.map { it.scope }.toSet() }
 
-        val READ_ONLY_SCOPES =
-            setOf(
-                STUDENT_READ.scope,
-                CLUB_READ.scope,
-                PROJECT_READ.scope,
-                NEIS_READ.scope,
-            )
+        val USER_ALLOWED_SCOPES: Set<String> by lazy {
+            entries.filter { it.accountRole == AccountRole.USER }.map { it.scope }.toSet()
+        }
 
         fun fromString(scope: String): ApiKeyScope? = entries.find { it.scope == scope }
 

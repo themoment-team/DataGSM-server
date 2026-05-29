@@ -19,4 +19,8 @@ object DependencyVersions {
     const val BUCKET4J_VERSION = "8.17.0"
 
     const val POI_VERSION = "5.5.1"
+
+    const val KOTLIN_POET_VERSION = "2.3.0"
+  
+    const val DISENDER_VERSION = "0.1.1"
 }

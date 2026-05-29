@@ -1,4 +1,4 @@
-model = "gpt-5.4"
+model = "gpt-5.5"
 model_reasoning_effort = "high"
 web_search = "live"
 
@@ -9,4 +9,4 @@ policy = "on-request"
 login_shell_allowed = true
 
 [features]
-codex_hooks = true
+hooks = true

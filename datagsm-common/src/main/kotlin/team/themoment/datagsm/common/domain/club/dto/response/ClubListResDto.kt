@@ -1,7 +1,9 @@
 package team.themoment.datagsm.common.domain.club.dto.response
 
 import io.swagger.v3.oas.annotations.media.Schema
+import team.themoment.datagsm.ksp.annotation.KmpExport
 
+@KmpExport
 data class ClubListResDto(
     @field:Schema(description = "전체 페이지 수", example = "1")
     val totalPages: Int,

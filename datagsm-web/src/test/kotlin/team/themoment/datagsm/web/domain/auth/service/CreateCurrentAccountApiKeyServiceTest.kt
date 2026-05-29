@@ -204,7 +204,7 @@ class CreateCurrentAccountApiKeyServiceTest :
                             }
 
                         exception.statusCode.value() shouldBe 400
-                        exception.message shouldBe "일반 사용자는 읽기 전용 권한 범위만 사용 가능합니다."
+                        exception.message shouldBe "일반 사용자에게 허용되지 않는 권한 범위입니다."
 
                         verify(exactly = 1) { mockCurrentUserProvider.getCurrentAccount() }
                         verify(exactly = 1) { mockApiKeyRepository.findByAccount(mockAccount) }
@@ -230,7 +230,7 @@ class CreateCurrentAccountApiKeyServiceTest :
                             }
 
                         exception.statusCode.value() shouldBe 400
-                        exception.message shouldBe "일반 사용자는 읽기 전용 권한 범위만 사용 가능합니다."
+                        exception.message shouldBe "일반 사용자에게 허용되지 않는 권한 범위입니다."
 
                         verify(exactly = 0) { mockApiKeyRepository.save(any()) }
                     }
@@ -254,7 +254,7 @@ class CreateCurrentAccountApiKeyServiceTest :
                             }
 
                         exception.statusCode.value() shouldBe 400
-                        exception.message shouldBe "일반 사용자는 읽기 전용 권한 범위만 사용 가능합니다."
+                        exception.message shouldBe "일반 사용자에게 허용되지 않는 권한 범위입니다."
 
                         verify(exactly = 0) { mockApiKeyRepository.save(any()) }
                     }
