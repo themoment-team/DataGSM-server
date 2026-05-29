@@ -101,9 +101,11 @@ subprojects {
     configure<KtlintExtension> {
         filter {
             // Stateless lambda (captures no projectDir/Project) so the filter is
-            // serializable for the configuration cache. Matches the absolute path to
-            // exclude everything under build/, including generated sources.
-            exclude { it.file.invariantSeparatorsPath.contains("/build/") }
+            // serializable for the configuration cache. KSP registers build/generated as a
+            // separate source root, so relativePath has no "build" segment — match the
+            // absolute path instead. Scoped to "/build/generated/" to avoid false positives
+            // from a checkout directory that merely contains "/build/" in its path.
+            exclude { it.file.invariantSeparatorsPath.contains("/build/generated/") }
         }
     }
 
