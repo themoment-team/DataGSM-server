@@ -2,6 +2,7 @@ from diagrams import Diagram, Cluster, Edge
 from diagrams.aws.compute import EC2
 from diagrams.aws.database import RDS, ElastiCache
 from diagrams.aws.devtools import Codedeploy
+from diagrams.aws.network import ALB
 from diagrams.aws.storage import S3
 from diagrams.onprem.vcs import Github
 from diagrams.onprem.client import User
@@ -42,6 +43,7 @@ with Diagram("datagsm-server Cloud Architecture",
              edge_attr=edge_attr):
 
     user = User("사용자")
+    alb = ALB("Application\nLoad Balancer")
 
     with Cluster("CI/CD Pipeline", graph_attr={"bgcolor": "#e3f2fd", "style": "rounded", "margin": "10"}):
         github = Github("GitHub\nRepository")
@@ -79,8 +81,9 @@ with Diagram("datagsm-server Cloud Architecture",
             stage_db = RDS("MySQL")
             stage_cache = ElastiCache("Redis")
 
-    user >> Edge(label="HTTPS", color="#4caf50") >> prod_app
-    user >> Edge(label="HTTPS (stage)", color="#03a9f4") >> stage_app
+    user >> Edge(label="HTTPS", color="#4caf50") >> alb
+    alb >> Edge(label="prod", color="#4caf50") >> prod_app
+    alb >> Edge(label="stage", color="#03a9f4") >> stage_app
 
     codedeploy >> Edge(label="deploy", color="#ff5722") >> prod_app
     codedeploy >> Edge(label="deploy", color="#ff5722") >> stage_app
