@@ -11,6 +11,11 @@ import team.themoment.datagsm.openapi.domain.webhook.service.ModifyWebhookServic
 import team.themoment.datagsm.openapi.global.security.provider.CurrentUserProvider
 import team.themoment.sdk.exception.ExpectedException
 
+@Deprecated(
+    message = "이 클래스는 datagsm-web 모듈로 이전 예정입니다. issue #344 참고",
+    level = DeprecationLevel.WARNING,
+)
+@Suppress("DEPRECATION")
 @Service
 class ModifyWebhookServiceImpl(
     private val webhookJpaRepository: WebhookJpaRepository,

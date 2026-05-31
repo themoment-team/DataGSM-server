@@ -31,17 +31,30 @@ import team.themoment.sdk.response.CommonApiResponse
 @Tag(name = "Webhook", description = "Webhook 관련 API")
 @RestController
 @RequestMapping("/v1/webhooks")
+@Suppress("DEPRECATION")
 class WebhookController(
     private val createWebhookService: CreateWebhookService,
     private val queryWebhookService: QueryWebhookService,
     private val modifyWebhookService: ModifyWebhookService,
     private val deleteWebhookService: DeleteWebhookService,
 ) {
-    @Operation(summary = "Webhook 등록", description = "새로운 Webhook을 등록합니다. secret은 이 응답에서만 확인할 수 있습니다.")
+    @Deprecated(
+        message = "이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고",
+        level = DeprecationLevel.WARNING,
+    )
+    @Operation(
+        summary = "Webhook 등록",
+        description = "새로운 Webhook을 등록합니다. secret은 이 응답에서만 확인할 수 있습니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "등록 성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 요청 (검증 실패 또는 Webhook 최대 개수 초과)", content = [Content()]),
+            ApiResponse(
+                responseCode = "400",
+                description = "잘못된 요청 (검증 실패 또는 Webhook 최대 개수 초과)",
+                content = [Content()],
+            ),
             ApiResponse(responseCode = "401", description = "인증 실패", content = [Content()]),
             ApiResponse(responseCode = "403", description = "권한 없음", content = [Content()]),
         ],
@@ -52,7 +65,15 @@ class WebhookController(
         @RequestBody @Valid reqDto: CreateWebhookReqDto,
     ): CreateWebhookResDto = createWebhookService.execute(reqDto)
 
-    @Operation(summary = "Webhook 목록 조회", description = "현재 API Key 소유자의 Webhook 목록을 조회합니다.")
+    @Deprecated(
+        message = "이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고",
+        level = DeprecationLevel.WARNING,
+    )
+    @Operation(
+        summary = "Webhook 목록 조회",
+        description = "현재 API Key 소유자의 Webhook 목록을 조회합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -64,7 +85,15 @@ class WebhookController(
     @GetMapping
     fun getWebhooks(): WebhookListResDto = queryWebhookService.execute()
 
-    @Operation(summary = "Webhook 수정", description = "Webhook의 수신 URL 또는 구독 이벤트를 수정합니다.")
+    @Deprecated(
+        message = "이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고",
+        level = DeprecationLevel.WARNING,
+    )
+    @Operation(
+        summary = "Webhook 수정",
+        description = "Webhook의 수신 URL 또는 구독 이벤트를 수정합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "수정 성공"),
@@ -81,7 +110,15 @@ class WebhookController(
         @RequestBody @Valid reqDto: ModifyWebhookReqDto,
     ): WebhookResDto = modifyWebhookService.execute(webhookId, reqDto)
 
-    @Operation(summary = "Webhook 삭제", description = "등록된 Webhook을 삭제합니다.")
+    @Deprecated(
+        message = "이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고",
+        level = DeprecationLevel.WARNING,
+    )
+    @Operation(
+        summary = "Webhook 삭제",
+        description = "등록된 Webhook을 삭제합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "삭제 성공"),
