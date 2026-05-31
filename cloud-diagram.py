@@ -90,6 +90,8 @@ with Diagram("datagsm-server Cloud Architecture",
 
     prod_app >> Edge(label="query", color="#795548") >> prod_db
     prod_app >> Edge(label="cache", color="#9c27b0") >> prod_cache
+    prod_app >> Edge(label="시스템 오류 알림", color="#f44336") >> discord
 
     stage_app >> Edge(label="query", color="#795548") >> stage_db
     stage_app >> Edge(label="cache", color="#9c27b0") >> stage_cache
+    stage_app >> Edge(label="시스템 오류 알림", color="#f44336") >> discord
