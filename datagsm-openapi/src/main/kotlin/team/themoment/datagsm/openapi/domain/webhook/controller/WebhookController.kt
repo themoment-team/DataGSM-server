@@ -38,7 +38,11 @@ class WebhookController(
     private val deleteWebhookService: DeleteWebhookService,
 ) {
     @Deprecated("이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고")
-    @Operation(summary = "Webhook 등록", description = "새로운 Webhook을 등록합니다. secret은 이 응답에서만 확인할 수 있습니다.", deprecated = true)
+    @Operation(
+        summary = "Webhook 등록",
+        description = "새로운 Webhook을 등록합니다. secret은 이 응답에서만 확인할 수 있습니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "등록 성공"),
@@ -54,7 +58,11 @@ class WebhookController(
     ): CreateWebhookResDto = createWebhookService.execute(reqDto)
 
     @Deprecated("이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고")
-    @Operation(summary = "Webhook 목록 조회", description = "현재 API Key 소유자의 Webhook 목록을 조회합니다.", deprecated = true)
+    @Operation(
+        summary = "Webhook 목록 조회",
+        description = "현재 API Key 소유자의 Webhook 목록을 조회합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "조회 성공"),
@@ -67,7 +75,11 @@ class WebhookController(
     fun getWebhooks(): WebhookListResDto = queryWebhookService.execute()
 
     @Deprecated("이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고")
-    @Operation(summary = "Webhook 수정", description = "Webhook의 수신 URL 또는 구독 이벤트를 수정합니다.", deprecated = true)
+    @Operation(
+        summary = "Webhook 수정",
+        description = "Webhook의 수신 URL 또는 구독 이벤트를 수정합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "수정 성공"),
@@ -85,7 +97,11 @@ class WebhookController(
     ): WebhookResDto = modifyWebhookService.execute(webhookId, reqDto)
 
     @Deprecated("이 API는 datagsm-web으로 이전 예정입니다. issue #344 참고")
-    @Operation(summary = "Webhook 삭제", description = "등록된 Webhook을 삭제합니다.", deprecated = true)
+    @Operation(
+        summary = "Webhook 삭제",
+        description = "등록된 Webhook을 삭제합니다.",
+        deprecated = true,
+    )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "삭제 성공"),
